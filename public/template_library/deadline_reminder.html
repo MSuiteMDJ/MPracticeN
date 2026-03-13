@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Deadline Reminder – {{client.name}}</title>
+
+  https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap
+
+  <style>
+    :root {
+      /* PurpleD Brand */
+      --theme-colour: #6A1B9A;
+      --theme-accent: #8E24AA;
+      --theme-soft: #F3E5F5;
+      --border: #d6c3e8;
+      --text: #1f1f1f;
+      --muted: #6b7280;
+    }
+
+    html,body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    .header-full {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      padding: 25px 40px 5px 40px;
+    }
+    .header-full img.logo {
+      width: 95px;
+    }
+    .header-full h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--theme-colour);
+      margin: 0;
+      letter-spacing: .4px;
+    }
+
+    .header-line {
+      border: 0;
+      border-bottom: 3px solid var(--theme-colour);
+      margin: 5px 0 16px 0;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: auto;
+      padding: 0 40px 40px 40px;
+    }
+
+    .summary {
+      background: var(--theme-soft);
+      border-left: 5px solid var(--theme-colour);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 26px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      color: var(--theme-colour);
+      font-weight: 700;
+      margin-top: 34px;
+      margin-bottom: 14px;
+      border-left: 5px solid var(--theme-colour);
+      padding-left: 12px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 22px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--theme-soft);
+      color: var(--theme-colour);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .footer {
+      margin-top: 40px;
+      border-top: 2px solid var(--theme-colour);
+      padding-top: 16px;
+      font-size: 12px;
+      text-align: center;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header-full">
+  <img 
+    src="/M_Logo_PurpleD.png"
+    class="logo"
+    alt="M Practice Manager Logo"
+  >
+  <h1>Deadline Reminder</h1>
+</div>
+
+<hr class="header-line">
+
+<div class="container">
+
+  <div class="summary">
+    <strong>Client:</strong> {{client.name}}<br>
+    <strong>Client Reference:</strong> {{client.reference}}<br>
+    <strong>Deadline Type:</strong> {{deadline.type}}<br>
+    <strong>Due Date:</strong> {{deadline.due_date}}<br>
+    <strong>Days Remaining:</strong> {{deadline.days_remaining}}
+  </div>
+
+  <p>Dear {{client.contact_name}},</p>
+
+  <p>
+    This is a reminder that an important filing or compliance deadline is approaching for 
+    <strong>{{client.name}}</strong>.  
+    Please review the details below and provide any outstanding information as soon as possible.
+  </p>
+
+  <h2 class="section-title">Action Required</h2>
+
+  <div class="card">
+    <p>{{deadline.action_items}}</p>
+    <p>{{deadline.notes}}</p>
+  </div>
+
+  <h2 class="section-title">Current Service Schedule</h2>
+
+  <div class="card" style="padding:0;">
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Frequency</th>
+          <th>Fee</th>
+          <th>Next Due</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{service_rows}}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-title">Contact</h2>
+
+  <div class="card">
+    <p>If you have questions or need help gathering records, please contact {{practice.contact}}.</p>
+    <p><strong>Email:</strong> {{practice.email}}</p>
+    <p><strong>Phone:</strong> {{practice.phone}}</p>
+  </div>
+
+  <div class="footer">
+    <strong>{{practice.name}}</strong><br>
+    {{practice.address}}<br>
+    Email: {{practice.email}} &nbsp; | &nbsp; Phone: {{practice.phone}}<br>
+    <em>Automated deadline reminder. © {{year}} {{practice.name}}.</em>
+  </div>
+
+</div>
+
+</body>
+</html>
+``

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Client Onboarding Pack - {{client.name}}</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --theme-colour: #6A1B9A; /* PurpleD brand */
+      --theme-light: #F3E5F5;
+      --theme-light-2: #E1BEE7;
+      --accent-dark: #4A0E6B;
+      --border: #d8cce2;
+      --text: #1f1f1f;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      color: var(--text);
+      background: #faf7ff;
+      line-height: 1.6;
+    }
+
+    .header-full {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 25px 40px 5px 40px;
+    }
+
+    .header-full img.logo {
+      width: 95px;
+      height: auto;
+    }
+
+    .header-full h1 {
+      font-size: 30px;
+      font-weight: 700;
+      margin: 0;
+      color: var(--theme-colour);
+      letter-spacing: 0.4px;
+    }
+
+    .header-line {
+      border: 0;
+      border-bottom: 3px solid var(--theme-colour);
+      margin: 5px 0 15px 0;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 30px auto;
+      padding: 0 40px 40px 40px;
+    }
+
+    .welcome {
+      background: linear-gradient(135deg, var(--theme-light) 0%, var(--theme-light-2) 100%);
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid #d4b4e1;
+      margin: 18px 0 28px 0;
+    }
+
+    .welcome h2 {
+      margin: 0 0 10px 0;
+      color: var(--accent-dark);
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .section-title {
+      color: var(--theme-colour);
+      font-size: 22px;
+      margin-top: 34px;
+      margin-bottom: 14px;
+      border-left: 5px solid var(--theme-colour);
+      padding-left: 12px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .info-list p {
+      margin: 6px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #e2d8eb;
+      padding: 10px;
+      background: #ffffff;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f5e9fc;
+      font-weight: 700;
+      color: var(--accent-dark);
+    }
+
+    .steps {
+      padding-left: 20px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      border-top: 2px solid var(--theme-colour);
+      padding-top: 16px;
+      font-size: 12px;
+      text-align: center;
+      color: #555;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    @media print {
+      .container { padding: 0 0 24px 0; }
+      .welcome, .card, table { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header-full">
+  <img 
+    src="/M_Logo_PurpleD.png" 
+    class="logo" 
+    alt="M Practice Manager Logo"
+  >
+  <h1>Client Onboarding Pack</h1>
+</div>
+
+<hr class="header-line">
+
+<div class="container">
+
+  <div class="welcome">
+    <h2>Welcome to {{practice.name}}</h2>
+    <p>Thank you for choosing us to support {{client.name}} with your accounting, tax, payroll, and compliance needs.</p>
+    <p class="muted">Prepared for {{client.contact_name}} on {{today}}</p>
+  </div>
+
+  <h2 class="section-title">Client Summary</h2>
+
+  <div class="grid">
+    <div class="card info-list">
+      <p><strong>Client Name:</strong> {{client.name}}</p>
+      <p><strong>Client Reference:</strong> {{client.reference}}</p>
+      <p><strong>Company Number:</strong> {{client.company_number}}</p>
+      <p><strong>Registered Address:</strong> {{client.registered_address}}</p>
+    </div>
+
+    <div class="card info-list">
+      <p><strong>Client Manager:</strong> {{client.manager}}</p>
+      <p><strong>Responsible Partner:</strong> {{client.partner}}</p>
+      <p><strong>Assigned Reviewer:</strong> {{client.assigned_reviewer}}</p>
+      <p><strong>Accounting Software:</strong> {{client.software}}</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Services in Scope</h2>
+
+  <div class="card" style="padding:0;">
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Frequency</th>
+          <th>Fee</th>
+          <th>Next Due</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{service_rows}}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-title">What Happens Next</h2>
+
+  <div class="card">
+    <ol class="steps">
+      <li>We finalise your client setup and review your current compliance position.</li>
+      <li>We confirm key filing dates, deadlines, and ongoing responsibilities.</li>
+      <li>We issue engagement letters and authority forms where required.</li>
+      <li>We start collecting the records needed for your upcoming deadlines.</li>
+    </ol>
+  </div>
+
+  <h2 class="section-title">What We Need From You</h2>
+
+  <div class="grid">
+    <div class="card">
+      <p><strong>Records and Information</strong></p>
+      <ul class="steps">
+        <li>Access to bookkeeping or accounting records</li>
+        <li>Latest tax correspondence or reference numbers</li>
+        <li>Payroll information, if applicable</li>
+        <li>Existing HMRC or Companies House notices</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Approvals and Setup</strong></p>
+      <ul class="steps">
+        <li>Signed engagement letter & authority documents</li>
+        <li>Confirmation of statutory details and office address</li>
+        <li>Payment setup and chosen billing method</li>
+        <li>Timely review of drafts and approval requests</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">Key Dates</h2>
+
+  <div class="card info-list">
+    <p><strong>Next Priority Deadline:</strong> {{deadline.type}}</p>
+    <p><strong>Due Date:</strong> {{deadline.due_date}}</p>
+    <p><strong>Preparation Notes:</strong> {{deadline.action_items}}</p>
+  </div>
+
+  <h2 class="section-title">Contact Details</h2>
+
+  <div class="card info-list">
+    <p><strong>Practice Contact:</strong> {{practice.contact}}</p>
+    <p><strong>Email:</strong> {{practice.email}}</p>
+    <p><strong>Phone:</strong> {{practice.phone}}</p>
+    <p><strong>Address:</strong> {{practice.address}}</p>
+  </div>
+
+  <div class="footer">
+    <strong>{{practice.name}}</strong><br>
+    {{practice.address}}<br>
+    Email: {{practice.email}} &nbsp; | &nbsp; Phone: {{practice.phone}}<br>
+    <em>Prepared for client onboarding. © {{year}} {{practice.name}}.</em>
+  </div>
+
+</div>
+
+</body>
+</html>

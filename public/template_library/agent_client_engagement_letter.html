@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Professional Engagement Letter – {{client.name}}</title>
+
+  https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap
+
+  <style>
+    :root {
+      --theme-colour: #2c2c2c; /* Metallic black brand theme */
+      --border: #dcdcdc;
+      --text: #111827;
+      --muted: #6b7280;
+      --box-bg: #f2f2f2;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #f7f7f7;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .header-full {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 25px 40px 5px 40px;
+    }
+
+    .header-full img.logo {
+      width: 95px;
+      height: auto;
+    }
+
+    .header-full h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--theme-colour);
+      margin: 0;
+      letter-spacing: 0.4px;
+    }
+
+    .header-line {
+      border: 0;
+      border-bottom: 3px solid var(--theme-colour);
+      margin: 5px 0 15px 0;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 45px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--theme-colour);
+      border-left: 4px solid var(--theme-colour);
+      padding-left: 12px;
+      margin-top: 38px;
+      margin-bottom: 16px;
+    }
+
+    .info-box {
+      background: var(--box-bg);
+      border-left: 4px solid var(--theme-colour);
+      padding: 18px 22px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+    }
+
+    th, td {
+      border: 1px solid #c8c8c8;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #e5e5e5;
+      color: var(--theme-colour);
+      font-weight: 600;
+    }
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .signature {
+      border-top: 1px solid #333;
+      padding-top: 12px;
+      min-height: 70px;
+    }
+
+    .footer {
+      margin-top: 50px;
+      border-top: 2px solid var(--theme-colour);
+      padding-top: 20px;
+      font-size: 12px;
+      text-align: center;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header-full">
+  <img src="/M_Logo_Black.png" class="logo" alt="Practice Logo">
+  <h1>Professional Engagement Letter</h1>
+</div>
+
+<hr class="header-line">
+
+<div class="container">
+
+  <p style="text-align:right">
+    <strong>{{practice.name}}</strong><br>
+    {{practice.address}}<br>
+    Email: {{practice.email}}<br>
+    Phone: {{practice.phone}}
+  </p>
+
+  <p>{{today}}</p>
+
+  <p>
+    <strong>{{client.name}}</strong><br>
+    {{client.registered_address}}
+  </p>
+
+  <p>Dear {{client.contact_name}},</p>
+
+  <h2 class="section-title">Letter of Engagement for Professional Services</h2>
+
+  <p>
+    Thank you for appointing <strong>{{practice.name}}</strong> to act for 
+    <strong>{{client.name}}</strong>.  
+    This engagement letter sets out the basis on which we will provide services, the scope of our work, and the 
+    respective responsibilities of both parties.
+  </p>
+
+  <h3 class="section-title">Scope of Services</h3>
+
+  <div class="info-box">
+    <p>The following services are included within our engagement:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Frequency</th>
+          <th>Fee</th>
+          <th>Next Due</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{service_rows}}
+      </tbody>
+    </table>
+
+    <p style="margin-top:12px">
+      <strong>Total Estimated Annual Fee:</strong> {{services.total_annual_fee}}
+    </p>
+  </div>
+
+  <h3 class="section-title">Our Responsibilities</h3>
+
+  <div class="info-box">
+    <ul>
+      <li>Provide accountancy, payroll, tax and compliance services with due skill, care and diligence.</li>
+      <li>Monitor statutory deadlines and request approvals or information when required.</li>
+      <li>Maintain confidentiality and manage your information in accordance with applicable data protection laws.</li>
+      <li>Notify you promptly of key risks, compliance matters, and issues affecting your filings.</li>
+    </ul>
+  </div>
+
+  <h3 class="section-title">Your Responsibilities</h3>
+
+  <div class="info-box">
+    <ul>
+      <li>Provide complete, accurate and timely records and information needed to perform our services.</li>
+      <li>Review all draft accounts, tax returns and filings prior to approval.</li>
+      <li>Advise us promptly of changes to ownership, business activities, registered office, or tax circumstances.</li>
+      <li>Settle fees according to the agreed billing model and payment method.</li>
+    </ul>
+  </div>
+
+  <h3 class="section-title">Commercial Terms</h3>
+
+  <div class="info-box">
+    <p><strong>Billing Model:</strong> {{client.billing_model}}</p>
+    <p><strong>Payment Method:</strong> {{client.payment_method}}</p>
+    <p><strong>Monthly Fee:</strong> {{client.monthly_fee}}</p>
+    <p><strong>Annual Fee Estimate:</strong> {{services.total_annual_fee}}</p>
+  </div>
+
+  <h3 class="section-title">Authority and Communication</h3>
+
+  <p>
+    You authorise us to liaise with HMRC, Companies House, previous accountants, software providers, and 
+    third parties where reasonably required.  
+    Where additional authority is required (e.g., HMRC authorisation), we will issue separate documentation.
+  </p>
+
+  <h3 class="section-title">Acceptance</h3>
+
+  <p>
+    Please sign below to confirm your acceptance of these terms of engagement and authorise us to begin work.
+  </p>
+
+  <div class="signature-grid">
+    <div>
+      <div class="signature"></div>
+      <p>
+        <strong>For {{practice.name}}</strong><br>
+        {{practice.contact}}
+      </p>
+    </div>
+
+    <div>
+      <div class="signature"></div>
+      <p>
+        <strong>For {{client.name}}</strong><br>
+        {{client.contact_name}}
+      </p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <strong>{{practice.name}}</strong><br>
+    {{practice.address}}<br>
+    Email: {{practice.email}} &nbsp; | &nbsp; Phone: {{practice.phone}}<br>
+    <em>Engagement letter for professional practice use. © {{year}} {{practice.name}}.</em>
+  </div>
+
+</div>
+
+</body>
+</html>

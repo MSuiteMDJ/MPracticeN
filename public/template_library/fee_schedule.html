@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Fee Schedule – {{client.name}}</title>
+
+  https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap
+
+  <style>
+    :root {
+      /* PurpleD Brand */
+      --theme-colour: #6A1B9A;
+      --theme-accent: #8E24AA;
+      --theme-soft: #F3E5F5;
+      --theme-soft-2: #E1BEE7;
+      --border: #d8cce2;
+      --text: #1f1f1f;
+      --muted: #6b7280;
+      --light: #f8f4fb;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header-full {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      padding: 25px 40px 5px 40px;
+    }
+    .header-full img.logo {
+      width: 95px;
+      height: auto;
+    }
+    .header-full h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--theme-colour);
+      margin: 0;
+      letter-spacing: 0.4px;
+    }
+
+    .header-line {
+      border: 0;
+      border-bottom: 3px solid var(--theme-colour);
+      margin: 6px 0 18px 0;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: auto;
+      padding: 0 40px 40px 40px;
+    }
+
+    /* Cards */
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      color: var(--theme-colour);
+      font-size: 22px;
+      font-weight: 700;
+      margin-top: 34px;
+      margin-bottom: 14px;
+      border-left: 5px solid var(--theme-colour);
+      padding-left: 12px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--theme-soft);
+      color: var(--theme-colour);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: .05em;
+    }
+
+    /* Metrics */
+    .totals {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .metric {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .metric .label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .metric .value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 8px;
+      color: var(--theme-colour);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      border-top: 2px solid var(--theme-colour);
+      padding-top: 16px;
+      font-size: 12px;
+      text-align: center;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header-full">
+  <img 
+    src="/M_Logo_PurpleD.png"
+    class="logo"
+    alt="M Practice Manager Logo"
+  >
+  <h1>Professional Services Fee Schedule</h1>
+</div>
+
+<hr class="header-line">
+
+<div class="container">
+
+  <!-- Client Information -->
+  <div class="card">
+    <p><strong>Client:</strong> {{client.name}}</p>
+    <p><strong>Client Reference:</strong> {{client.reference}}</p>
+    <p><strong>Company Number:</strong> {{client.company_number}}</p>
+    <p><strong>Billing Model:</strong> {{client.billing_model}}</p>
+    <p><strong>Payment Method:</strong> {{client.payment_method}}</p>
+    <p><strong>Schedule Date:</strong> {{today}}</p>
+  </div>
+
+  <!-- Service Table -->
+  <h2 class="section-title">Service Fees</h2>
+
+  <div class="card" style="padding:0;">
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Frequency</th>
+          <th>Fee</th>
+          <th>Next Due</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{service_rows}}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Totals -->
+  <div class="totals">
+    <div class="metric">
+      <div class="label">Estimated Annual Fee</div>
+      <div class="value">{{services.total_annual_fee}}</div>
+    </div>
+
+    <div class="metric">
+      <div class="label">Monthly Recurring Fees</div>
+      <div class="value">{{services.total_monthly_fee}}</div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <h2 class="section-title">Notes</h2>
+
+  <div class="card">
+    <ul>
+      <li>Fees are based on the current scope of work and may be reviewed if service requirements change.</li>
+      <li>Out-of-scope advisory or project work will be quoted separately before commencement.</li>
+      <li>All fees are subject to our standard engagement terms and billing arrangements.</li>
+    </ul>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <strong>{{practice.name}}</strong><br>
+    {{practice.address}}<br>
+    Email: {{practice.email}} &nbsp; | &nbsp; Phone: {{practice.phone}}<br>
+    <em>Fee schedule for professional practice use. © {{year}} {{practice.name}}.</em>
+  </div>
+
+</div>
+
+</body>
+</html>
+``

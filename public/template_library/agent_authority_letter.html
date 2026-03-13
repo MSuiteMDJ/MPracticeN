@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Letter of Authority - {{client.name}}</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --theme-colour: #2c2c2c; /* Dark metallic theme */
+      --border: #dcdcdc;
+      --text: #111827;
+      --bg-soft: #f2f2f2;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      color: var(--text);
+      background: #f7f7f7;
+      line-height: 1.65;
+    }
+
+    .header-full {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 25px 40px 5px 40px;
+    }
+
+    .header-full img.logo {
+      width: 95px;
+    }
+
+    .header-full h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--theme-colour);
+      margin: 0;
+      letter-spacing: 0.4px;
+    }
+
+    .header-line {
+      border: 0;
+      border-bottom: 3px solid var(--theme-colour);
+      margin: 5px 0 15px 0;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 45px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--theme-colour);
+      border-left: 4px solid var(--theme-colour);
+      padding-left: 12px;
+      margin-top: 38px;
+      margin-bottom: 16px;
+    }
+
+    .info-box {
+      background: var(--bg-soft);
+      border-left: 4px solid var(--theme-colour);
+      padding: 18px 22px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .signature {
+      border-top: 1px solid #333;
+      padding-top: 12px;
+      min-height: 70px;
+    }
+
+    .footer {
+      margin-top: 50px;
+      border-top: 2px solid var(--theme-colour);
+      padding-top: 20px;
+      font-size: 12px;
+      text-align: center;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header-full">
+  <img src="/M_Logo_Black.png" class="logo" alt="Practice Logo">
+  <h1>Letter of Authority</h1>
+</div>
+
+<hr class="header-line">
+
+<div class="container">
+
+  <div class="info-box">
+    <strong>Date:</strong> {{today}}<br>
+    <strong>Client:</strong> {{client.name}}<br>
+    <strong>Company Number:</strong> {{client.company_number}}<br>
+    <strong>Client Reference:</strong> {{client.reference}}<br>
+    <strong>Practice:</strong> {{practice.name}}
+  </div>
+
+  <p>To whom it may concern,</p>
+
+  <h2 class="section-title">Authority to Act</h2>
+
+  <p>
+    We, <strong>{{client.name}}</strong>, hereby grant <strong>{{practice.name}}</strong> authority 
+    to act on our behalf in respect of our accounting, taxation, payroll, and statutory compliance matters.
+  </p>
+
+  <h2 class="section-title">Scope of Authority</h2>
+
+  <div class="info-box">
+    <ol style="margin:0; padding-left:22px;">
+      <li>Communicating with HMRC regarding tax registrations, submissions, enquiries, and compliance.</li>
+      <li>Communicating with Companies House regarding statutory filings and company information updates.</li>
+      <li>Requesting information from previous advisers, payroll providers, banks, and software suppliers where required.</li>
+      <li>Receiving correspondence relevant to the services covered in our engagement agreement.</li>
+      <li>Preparing, reviewing, and submitting statutory or tax filings upon obtaining appropriate client approval.</li>
+    </ol>
+  </div>
+
+  <h2 class="section-title">Client Details</h2>
+
+  <div class="info-box">
+    <p><strong>Registered Name:</strong> {{client.registered_name}}</p>
+    <p><strong>Registered Office:</strong> {{client.registered_address}}</p>
+    <p><strong>HMRC Agent Reference:</strong> {{client.hmrc_agent_reference}}</p>
+    <p><strong>Previous Accountant:</strong> {{client.previous_accountant}}</p>
+  </div>
+
+  <h2 class="section-title">Practice Details</h2>
+
+  <div class="info-box">
+    <p><strong>Practice Name:</strong> {{practice.name}}</p>
+    <p><strong>Primary Contact:</strong> {{practice.contact}}</p>
+    <p><strong>Email:</strong> {{practice.email}}</p>
+    <p><strong>Phone:</strong> {{practice.phone}}</p>
+    <p><strong>Address:</strong> {{practice.address}}</p>
+  </div>
+
+  <h2 class="section-title">Declaration</h2>
+
+  <p>
+    This authority shall remain in effect until revoked in writing by the client.  
+    The client acknowledges responsibility for the accuracy and completeness of information 
+    provided to <strong>{{practice.name}}</strong> in relation to the services performed.
+  </p>
+
+  <div class="signature-grid">
+    <div>
+      <div class="signature"></div>
+      <p>
+        <strong>Authorised Signatory</strong><br>
+        {{client.contact_name}}<br>
+        {{client.name}}
+      </p>
+    </div>
+
+    <div>
+      <div class="signature"></div>
+      <p>
+        <strong>For {{practice.name}}</strong><br>
+        {{practice.contact}}
+      </p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <strong>{{practice.name}}</strong><br>
+    {{practice.address}}<br>
+    Email: {{practice.email}} &nbsp; | &nbsp; Phone: {{practice.phone}}<br>
+    <em>Authority document for professional practice use. © {{year}} {{practice.name}}.</em>
+  </div>
+
+</div>
+
+</body>
+</html>

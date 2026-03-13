@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Accounts Approval Letter - {{client.name}}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --theme-colour: #2c2c2c; /* Dark theme to complement metallic logo */
+      --border: #dcdcdc;
+      --text: #111827;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      color: var(--text);
+      background: #f7f7f7;
+      line-height: 1.65;
+    }
+
+    .header-full {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 25px 40px 5px 40px;
+    }
+
+    .header-full img.logo {
+      width: 90px;
+      height: auto;
+    }
+
+    .header-full h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--theme-colour);
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+
+    .header-line {
+      border: 0;
+      border-bottom: 3px solid var(--theme-colour);
+      margin: 5px 0 10px 0;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 40px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .info-box {
+      background: #f0f0f0;
+      border-left: 4px solid var(--theme-colour);
+      padding: 16px 20px;
+      border-radius: 6px;
+      margin: 22px 0;
+    }
+
+    .footer {
+      margin-top: 40px;
+      border-top: 2px solid var(--theme-colour);
+      padding-top: 20px;
+      font-size: 12px;
+      text-align: center;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header-full">
+  <img src="/M_Logo_Black.png" class="logo" alt="Practice Logo">
+  <h1>Accounts Approval Letter</h1>
+</div>
+
+<hr class="header-line">
+
+<div class="container">
+
+  <p style="text-align:right">
+    <strong>{{practice.name}}</strong><br>
+    {{practice.address}}<br>
+    Email: {{practice.email}}<br>
+    Phone: {{practice.phone}}
+  </p>
+
+  <p>{{today}}</p>
+
+  <p>
+    <strong>{{client.name}}</strong><br>
+    {{client.registered_address}}
+  </p>
+
+  <p>Dear {{client.contact_name}},</p>
+
+  <p>
+    We have prepared the draft financial statements for the year ended 
+    <strong>{{accounts.year_end}}</strong>, together with the accompanying corporation tax 
+    computations and supporting documents where applicable.
+  </p>
+
+  <div class="info-box">
+    <p><strong>Client:</strong> {{client.name}}</p>
+    <p><strong>Year End:</strong> {{accounts.year_end}}</p>
+    <p><strong>Approval Required By:</strong> {{accounts.approval_due}}</p>
+    <p><strong>Responsible Manager:</strong> {{accounts.manager}}</p>
+  </div>
+
+  <p>
+    Please review the attached draft accounts and let us know if you approve them for filing.
+    If you require any amendments, please inform us before the approval deadline shown above.
+  </p>
+
+  <p>{{accounts.notes}}</p>
+
+  <p>
+    Once approved, we will finalise the accounts and proceed with submission to Companies House
+    and HMRC (where relevant), in line with statutory deadlines and our agreed engagement.
+  </p>
+
+  <p>Kind regards,</p>
+
+  <p>
+    <strong>{{practice.contact}}</strong><br>
+    {{practice.name}}
+  </p>
+
+  <div class="footer">
+    <strong>{{practice.name}}</strong><br>
+    {{practice.address}}<br>
+    Email: {{practice.email}} &nbsp; | &nbsp; Phone: {{practice.phone}}<br>
+    <em>Draft accounts approval letter. © {{year}} {{practice.name}}.</em>
+  </div>
+
+</div>
+
+</body>
+</html>

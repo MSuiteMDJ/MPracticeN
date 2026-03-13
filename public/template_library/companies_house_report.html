@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Companies House Report – {{company_name}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       BASE (applies to both themes)
+    ========================================================== */
+    :root{
+      /* default tokens will be overridden by the theme class on <body> */
+      --theme-colour:#6A1B9A;
+      --accent:#8E24AA;
+      --soft:#F3E5F5;
+      --soft2:#E1BEE7;
+      --border:#d6c3e8;
+      --text:#1f1f1f;
+
+      --success:#16a34a;
+      --warning:#d97706;
+      --danger:#dc2626;
+      --neutral:#6c757d;
+    }
+
+    html,body{
+      margin:0; padding:0;
+      font-family:'Roboto', Arial, sans-serif;
+      color:var(--text); background:#fff; line-height:1.6;
+    }
+
+    .header-full{
+      width:100%; display:flex; align-items:center; gap:22px;
+      padding:25px 40px 6px 40px;
+    }
+    .header-full img.logo{ width:95px; height:auto; }
+    .header-full h1{ font-size:32px; font-weight:700; margin:0; color:var(--theme-colour); letter-spacing:.4px; }
+
+    .header-line{ border:0; border-bottom:3px solid var(--theme-colour); margin:6px 0 18px 0; }
+
+    .container{ max-width:1100px; margin:auto; padding:0 40px 40px 40px; }
+
+    .section-title{
+      color:var(--theme-colour); font-size:22px; font-weight:700;
+      margin-top:34px; margin-bottom:12px; border-left:5px solid var(--theme-colour); padding-left:12px;
+    }
+
+    .card{
+      background:#fff; border:1px solid var(--border);
+      border-radius:10px; padding:20px; margin-bottom:20px;
+    }
+
+    .info-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+
+    .gradient-welcome{
+      background:linear-gradient(135deg,var(--soft) 0%, var(--soft2) 100%);
+      padding:22px; border-radius:10px; border:1px solid var(--border); margin:10px 0 24px 0;
+    }
+    .gradient-welcome h2{ margin:0 0 8px 0; font-size:24px; color:var(--accent); }
+    .small{ font-size:.9em; color:#555; }
+
+    table{ width:100%; border-collapse:collapse; margin:12px 0; }
+    th,td{ border:1px solid var(--border); padding:10px 12px; text-align:left; vertical-align:top; background:#fff; }
+    th{ background:var(--soft); color:var(--theme-colour); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.05em; }
+    tr.historical-row td{ background:#f5f5fb; }
+
+    .badge{ padding:4px 8px; border-radius:5px; font-size:.85em; font-weight:700; color:#fff; display:inline-block; }
+    .success{ background:var(--success); }
+    .warning{ background:var(--warning); color:#111; }
+    .danger{ background:var(--danger); }
+    .neutral{ background:var(--neutral); }
+
+    pre{ background:#faf5fd; border:1px solid var(--border); padding:15px; overflow-x:auto; font-size:.85em; white-space:pre-wrap; }
+
+    .footer{ margin-top:40px; border-top:2px solid var(--theme-colour); padding:16px 0 0 0; font-size:12px; text-align:center; color:#555; }
+
+    /* =========================================================
+       THEME: PurpleD (client-facing)
+    ========================================================== */
+    .purple-theme{
+      --theme-colour:#6A1B9A;
+      --accent:#8E24AA;
+      --soft:#F3E5F5;
+      --soft2:#E1BEE7;
+      --border:#d6c3e8;
+      --text:#1f1f1f;
+    }
+
+    /* =========================================================
+       THEME: Black (compliance / HMRC)
+    ========================================================== */
+    .black-theme{
+      --theme-colour:#2C2C2C;
+      --accent:#3A3A3A;
+      --soft:#F2F2F2;
+      --soft2:#E8E8E8;
+      --border:#d0d0d0;
+      --text:#111111;
+    }
+
+    /* =========================================================
+       THEME TABS (screen only; hidden on print)
+    ========================================================== */
+    .theme-tabs{ display:flex; gap:12px; padding:14px 40px 0 40px; }
+    .theme-tab{
+      padding:10px 18px; border-radius:8px; cursor:pointer;
+      border:1px solid #ccc; background:#f9f9f9; font-weight:600; transition:.2s; user-select:none;
+    }
+    .theme-tab.active{ background:var(--theme-colour); border-color:var(--theme-colour); color:#fff; }
+
+    /* =========================================================
+       PRINT
+       - Hide tabs for print/PDF
+       - Keep colours accurate
+    ========================================================== */
+    @media print{
+      .theme-tabs, .theme-tab{ display:none !important; visibility:hidden !important; }
+      *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    }
+
+    @media (max-width: 820px){
+      .info-grid{ grid-template-columns:1fr; }
+      .header-full{ padding:16px 16px 6px 16px; }
+      .container{ padding:0 16px 24px 16px; }
+      .theme-tabs{ padding:10px 16px 0 16px; }
+    }
+  </style>
+
+  <script>
+    function switchTheme(theme){
+      document.body.classList.remove('purple-theme','black-theme');
+      document.body.classList.add(theme);
+
+      // Tab UI
+      document.getElementById('purpleTab').classList.toggle('active', theme==='purple-theme');
+      document.getElementById('blackTab').classList.toggle('active', theme==='black-theme');
+
+      // Swap logo
+      const logo = document.getElementById('chLogo');
+      logo.src = (theme==='black-theme') ? '{{logo_black_url}}' : '{{logo_purple_url}}';
+      logo.alt = (theme==='black-theme') ? 'M Practice Manager Logo (Black)' : 'M Practice Manager Logo (Purple)';
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      // Default to Purple (client-facing). To default to Black, set body class below.
+      switchTheme(document.body.classList.contains('black-theme') ? 'black-theme' : 'purple-theme');
+    });
+  </script>
+</head>
+
+<!-- Change to class="black-theme" if you want Black as the default -->
+<body class="purple-theme">
+
+  <!-- THEME SELECTOR (hidden on print/PDF) -->
+  <div class="theme-tabs">
+    <div id="purpleTab" class="theme-tab active" onclick="switchTheme('purple-theme')">Purple</div>
+    <div id="blackTab"  class="theme-tab"        onclick="switchTheme('black-theme')">Black</div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header-full">
+    <img id="chLogo" class="logo" src="{{logo_purple_url}}" alt="M Practice Manager Logo (Purple)" />
+    <h1>Companies House Report</h1>
+  </div>
+  <hr class="header-line" />
+
+  <div class="container">
+
+    <!-- WELCOME / CONTEXT -->
+    <div class="gradient-welcome">
+      <h2>{{company_name}} · Company number {{company_number}}</h2>
+      <div class="small">Generated {{generated_date}} at {{generated_time}}</div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="section-title">Company Profile</div>
+    <div class="info-grid">
+      <div class="card">
+        <h3 style="margin-top:0;color:var(--accent);">Basic Information</h3>
+        <p><strong>Company Name:</strong> {{company_name}}</p>
+        <p><strong>Company Number:</strong> {{company_number}}</p>
+        <p><strong>Status:</strong> <span class="badge {{company_status_badge_class}}">{{company_status}}</span></p>
+        <p><strong>Company Type:</strong> {{company_type}}</p>
+        <p><strong>Incorporated:</strong> {{company_incorporated}}</p>
+        <p><strong>Jurisdiction:</strong> {{company_jurisdiction}}</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0;color:var(--accent);">Registered Office</h3>
+        <p>{{company_registered_office}}</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0;color:var(--accent);">Business Activity</h3>
+        <p><strong>SIC Codes:</strong> {{company_sic_codes}}</p>
+        <p><strong>Can File:</strong> {{company_can_file}}</p>
+        <p><strong>Has Charges:</strong> {{company_has_charges}}</p>
+        <p><strong>Has Insolvency History:</strong> {{company_has_insolvency_history}}</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0;color:var(--accent);">Compliance Status</h3>
+        <p><strong>Next Accounts Due:</strong> {{accounts_next_due}}
+          <span class="badge {{accounts_due_badge_class}}">{{accounts_due_badge_text}}</span>
+        </p>
+        <p><strong>Next Confirmation Statement:</strong> {{confirmation_next_due}}
+          <span class="badge {{confirmation_due_badge_class}}">{{confirmation_due_badge_text}}</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- OFFICERS -->
+    <div class="section-title">Officers ({{officers_summary}})</div>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th><th>Role</th><th>Appointed</th><th>Resigned</th>
+            <th>Nationality</th><th>Country of Residence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{officers_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FILINGS -->
+    <div class="section-title">Recent Filings (Last {{filings_count}})</div>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Description</th><th>Category</th><th>Type</th></tr>
+        </thead>
+        <tbody>
+          {{filings_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CHARGES -->
+    <div class="section-title">Charges</div>
+    <div class="card">
+      <p>{{charges_text}}</p>
+    </div>
+
+    <!-- PSC -->
+    <div class="section-title">Persons with Significant Control ({{psc_count}})</div>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Kind</th><th>Notified</th><th>Nature of Control</th></tr>
+        </thead>
+        <tbody>
+          {{psc_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RAW JSON -->
+    <div class="section-title">Raw Data (JSON)</div>
+    <details class="card">
+      <summary style="cursor:pointer;color:var(--accent);font-weight:700">
+        Click to view complete raw data
+      </summary>
+      <pre>{{raw_json}}</pre>
+    </details>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    {{practice_name}}<br />
+    {{practice_address}}<br />
+    Email: {{practice_email}} &nbsp; | &nbsp; Phone: {{practice_phone}}<br />
+    <em>Prepared on {{generated_date}}. © {{year}} {{practice_name}}.</em>
+  </div>
+
+</body>
+</html>

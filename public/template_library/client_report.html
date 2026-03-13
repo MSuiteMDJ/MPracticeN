@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Client Dossier – {{client_name}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       BASE (applies to both themes)
+    ========================================================== */
+    :root {
+      /* these will be overridden by theme classes via CSS variables */
+      --theme-colour: #6A1B9A;
+      --accent: #8E24AA;
+      --soft: #F3E5F5;
+      --border: #d6c3e8;
+      --text: #1f1f1f;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    .header-full {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 25px 40px 0 40px;
+    }
+
+    .header-full img.logo {
+      width: 95px;
+      height: auto;
+    }
+
+    .header-full h1 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: var(--theme-colour);
+    }
+
+    .header-line {
+      border: 0;
+      border-bottom: 3px solid var(--theme-colour);
+      margin: 10px 0 20px 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 40px 40px 40px;
+    }
+
+    .section-title {
+      margin-top: 36px;
+      margin-bottom: 14px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--theme-colour);
+      border-left: 6px solid var(--theme-colour);
+      padding-left: 14px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      background: var(--soft);
+      color: var(--theme-colour);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 700; }
+    .success { background: #dcfce7; color: #166534; }
+    .warning { background: #fef3c7; color: #92400e; }
+    .danger  { background: #fee2e2; color: #991b1b; }
+    .muted   { color: #6b7280; }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 12px;
+      border-top: 2px solid var(--theme-colour);
+      padding-top: 16px;
+      color: #555;
+    }
+
+    /* =========================================================
+       THEME: PurpleD (client-facing)
+    ========================================================== */
+    .purple-theme {
+      --theme-colour: #6A1B9A;
+      --accent: #8E24AA;
+      --soft: #F3E5F5;
+      --border: #d6c3e8;
+      --text: #1f1f1f;
+    }
+
+    /* =========================================================
+       THEME: Black (HMRC / compliance)
+    ========================================================== */
+    .black-theme {
+      --theme-colour: #2C2C2C;
+      --accent: #3A3A3A;
+      --soft: #F2F2F2;
+      --border: #d0d0d0;
+      --text: #111111;
+    }
+
+    /* =========================================================
+       THEME TABS (screen only; hidden on print)
+    ========================================================== */
+    .theme-tabs {
+      display: flex;
+      gap: 12px;
+      padding: 14px 40px 8px 40px;
+    }
+
+    .theme-tab {
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid #cccccc;
+      background: #f9f9f9;
+      font-weight: 600;
+      transition: 0.2s;
+      user-select: none;
+    }
+
+    .theme-tab.active {
+      background: var(--theme-colour);
+      border-color: var(--theme-colour);
+      color: #ffffff;
+    }
+
+    /* =========================================================
+       PRINT RULES
+       - Remove tabs on print
+       - Preserve colours
+    ========================================================== */
+    @media print {
+      .theme-tabs,
+      .theme-tab {
+        display: none !important;
+        visibility: hidden !important;
+      }
+      /* Keep brand colours in print/PDF */
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .header-full { padding: 16px 16px 0 16px; }
+      .container   { padding: 0 16px 24px 16px; }
+      .theme-tabs  { padding: 10px 16px 6px 16px; }
+    }
+  </style>
+
+  <script>
+    function switchTheme(theme) {
+      document.body.classList.remove('purple-theme', 'black-theme');
+      document.body.classList.add(theme);
+
+      // Update active tab styling
+      document.getElementById('purpleTab').classList.toggle('active', theme === 'purple-theme');
+      document.getElementById('blackTab').classList.toggle('active', theme === 'black-theme');
+
+      // Swap logo based on theme
+      const logo = document.getElementById('dossierLogo');
+      logo.src = theme === 'black-theme' ? '{{logo_black_url}}' : '{{logo_purple_url}}';
+      logo.alt = theme === 'black-theme' ? 'M Practice Manager Logo (Black)' : 'M Practice Manager Logo (Purple)';
+    }
+
+    // Initialise on DOM ready (defaults to Purple)
+    document.addEventListener('DOMContentLoaded', function () {
+      switchTheme(document.body.classList.contains('black-theme') ? 'black-theme' : 'purple-theme');
+    });
+  </script>
+</head>
+
+<!-- Default to Purple (client-facing). Change to "black-theme" to default to Black. -->
+<body class="purple-theme">
+
+  <!-- THEME SELECTOR TABS (hidden on print/PDF) -->
+  <div class="theme-tabs">
+    <div id="purpleTab" class="theme-tab active" onclick="switchTheme('purple-theme')">Purple</div>
+    <div id="blackTab" class="theme-tab"  onclick="switchTheme('black-theme')">Black</div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header-full">
+    <img id="dossierLogo" class="logo" src="{{logo_purple_url}}" alt="M Practice Manager Logo (Purple)" />
+    <h1>Client Report</h1>
+  </div>
+
+  <hr class="header-line" />
+
+  <div class="container">
+
+    <!-- CLIENT SUMMARY -->
+    <div class="section-title">Client Summary</div>
+    <div class="grid-2">
+      <div class="card">
+        <p><strong>Client Name:</strong> {{client_name}}</p>
+        <p><strong>Reference:</strong> {{client_ref}}</p>
+        <p><strong>Client Type:</strong> {{client_type}}</p>
+        <p><strong>Portfolio:</strong> {{portfolio_name}}</p>
+        <p><strong>Internal Rating:</strong> {{internal_rating}}</p>
+      </div>
+      <div class="card">
+        <p><strong>Primary Contact:</strong> {{primary_contact_name}}</p>
+        <p><strong>Email:</strong> {{primary_contact_email}}</p>
+        <p><strong>Phone:</strong> {{primary_contact_phone}}</p>
+        <p><strong>Address:</strong> {{contact_address}}</p>
+      </div>
+    </div>
+
+    <!-- AML & RISK -->
+    <div class="section-title">AML & Risk</div>
+    <div class="grid-3">
+      <div class="card">
+        <p><strong>AML Risk:</strong> {{aml_risk_rating}}</p>
+        <p><strong>Review Frequency:</strong> {{risk_review_frequency}}</p>
+        <p><strong>Next Review:</strong> {{aml_review_date}}</p>
+      </div>
+      <div class="card">
+        <p><strong>ID Verified:</strong> {{id_verified}}</p>
+        <p><strong>Source of Funds:</strong> {{source_of_funds_checked}}</p>
+        <p><strong>Beneficial Owners Verified:</strong> {{beneficial_owner_verified}}</p>
+      </div>
+      <div class="card">
+        <p><strong>Agent Authorised:</strong> {{hmrc_agent_authorised}}</p>
+        <p><strong>Professional Clearance:</strong> {{professional_clearance_received}}</p>
+        <p><strong>Take-On Completed:</strong> {{take_on_completed}}</p>
+      </div>
+    </div>
+
+    <!-- ENGAGEMENT -->
+    <div class="section-title">Engagement</div>
+    <div class="card">
+      <p><strong>Type:</strong> {{engagement_type}}</p>
+      <p><strong>Letter Sent:</strong> {{engagement_letter_sent_date}}</p>
+      <p><strong>Signed:</strong> {{engagement_letter_signed_date}}</p>
+      <p><strong>Billing Model:</strong> {{billing_model}}</p>
+      <p><strong>Payment Method:</strong> {{payment_method}}</p>
+      <p><strong>Last Fee Review:</strong> {{last_fee_review_date}}</p>
+    </div>
+
+    <!-- TAX REFERENCES -->
+    <div class="section-title">Tax References</div>
+    <div class="grid-2">
+      <div class="card">
+        <p><strong>UTR:</strong> {{utr}}</p>
+        <p><strong>Corporation Tax Reference:</strong> {{corporation_tax_ref}}</p>
+        <p><strong>Self Assessment UTR:</strong> {{self_assessment_utr}}</p>
+      </div>
+      <div class="card">
+        <p><strong>VAT Number:</strong> {{vat_number}}</p>
+        <p><strong>VAT Scheme:</strong> {{vat_scheme}}</p>
+        <p><strong>PAYE Reference:</strong> {{paye_reference}}</p>
+      </div>
+    </div>
+
+    <!-- SERVICES & COMPLIANCE -->
+    <div class="section-title">Services & Compliance</div>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Frequency</th>
+            <th>Annual Fee</th>
+            <th>Next Due</th>
+            <th>Compliance Dates</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{service_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DEADLINES -->
+    <div class="section-title">Upcoming Deadlines</div>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Due Date</th>
+            <th>Description</th>
+            <th>Tasks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{deadline_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TASK PROGRESS -->
+    <div class="section-title">Task Progress</div>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Task</th>
+            <th>Due</th>
+            <th>Status</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{task_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FEES -->
+    <div class="section-title">Fees Overview</div>
+    <div class="grid-2">
+      <div class="card">
+        <p><strong>Annual Fees:</strong> {{annual_fee}}</p>
+        <p><strong>Monthly Recurring:</strong> {{monthly_recurring}}</p>
+        <p><strong>Billing Model:</strong> {{billing_model}}</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li>Based on active services</li>
+          <li>Reviewed annually</li>
+          <li>Adjustments apply if scope changes</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COMPANIES HOUSE -->
+    <div class="section-title">Companies House Summary</div>
+    <div class="grid-2">
+      <div class="card">
+        <p><strong>Company Number:</strong> {{company_number}}</p>
+        <p><strong>Status:</strong> {{company_status}}</p>
+        <p><strong>Incorporated:</strong> {{incorporated_on}}</p>
+      </div>
+      <div class="card">
+        <p><strong>Last Accounts:</strong> {{last_accounts_made_up_to}}</p>
+        <p><strong>Next Accounts Due:</strong> {{accounts_due_by}}</p>
+        <p><strong>Confirmation Statement Due:</strong> {{statement_due_by}}</p>
+      </div>
+    </div>
+
+    <!-- DIRECTORS & RELATIONSHIPS -->
+    <div class="section-title">Directors & Relationships</div>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Appointed</th>
+            <th>Resigned</th>
+            <th>Linked Client Ref</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{director_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DOCUMENT SUMMARY -->
+    <div class="section-title">Documents</div>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Version</th>
+            <th>File</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{document_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ADVISORY -->
+    <div class="section-title">Advisory Notes & Recommendations</div>
+    <div class="card">
+      {{advisory_text}}
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <strong>{{practice_name}}</strong><br />
+      {{practice_address}}<br />
+      Email: {{practice_email}} &nbsp; | &nbsp; Phone: {{practice_phone}}<br />
+      <em>Client Dossier · © {{year}} {{practice_name}}</em>
+    </div>
+
+  </div>
+</body>
+</html>

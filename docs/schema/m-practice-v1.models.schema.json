@@ -1,0 +1,548 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://m-practice.local/schema/m-practice-v1.models.schema.json",
+  "title": "M Practice Core Models (v1)",
+  "description": "Current TypeScript model contract for contacts, service templates, client service engagements, onboarding documents, Companies House response, and derived client profile.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contact": {
+      "$ref": "#/$defs/contact"
+    },
+    "contact_filter": {
+      "$ref": "#/$defs/contact_filter"
+    },
+    "contact_list_response": {
+      "$ref": "#/$defs/contact_list_response"
+    },
+    "service_template_model": {
+      "$ref": "#/$defs/service_template_model"
+    },
+    "client_service_engagement": {
+      "$ref": "#/$defs/client_service_engagement"
+    },
+    "client_document": {
+      "$ref": "#/$defs/client_document"
+    },
+    "companies_house_profile_response": {
+      "$ref": "#/$defs/companies_house_profile_response"
+    },
+    "client_profile": {
+      "$ref": "#/$defs/client_profile"
+    }
+  },
+  "$defs": {
+    "contact_type": {
+      "type": "string",
+      "enum": ["individual", "business", "agent", "hmrc"]
+    },
+    "contact_field_status": {
+      "type": "string",
+      "enum": ["missing", "provided", "not_applicable"]
+    },
+    "legal_entity_type": {
+      "type": "string",
+      "enum": ["ltd", "plc", "llp", "partnership", "sole_trader", "charity", "other"]
+    },
+    "engagement_type": {
+      "type": "string",
+      "enum": ["limited_company", "sole_trader", "partnership", "individual"]
+    },
+    "aml_risk_rating": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "risk_review_frequency": {
+      "type": "string",
+      "enum": ["monthly", "quarterly", "semi_annual", "annual"]
+    },
+    "vat_stagger": {
+      "type": "string",
+      "enum": ["monthly", "a", "b", "c"]
+    },
+    "vat_frequency": {
+      "type": "string",
+      "enum": ["monthly", "quarterly", "annual"]
+    },
+    "billing_model": {
+      "type": "string",
+      "enum": ["fixed", "monthly_dd", "hourly", "value_pricing"]
+    },
+    "software_used": {
+      "type": "string",
+      "enum": ["xero", "quickbooks", "sage", "other"]
+    },
+    "payroll_frequency": {
+      "type": "string",
+      "enum": ["weekly", "fortnightly", "four_weekly", "monthly", "quarterly"]
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "name",
+        "email",
+        "phone",
+        "address",
+        "created_at",
+        "updated_at",
+        "created_by"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "$ref": "#/$defs/contact_type" },
+        "name": { "type": "string" },
+        "contact_person": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "address_line_2": { "type": "string" },
+        "city": { "type": "string" },
+        "postcode": { "type": "string" },
+        "country": { "type": "string" },
+        "eori": { "type": "string" },
+        "vat_number": { "type": "string" },
+        "company_number": { "type": "string" },
+        "legal_entity_type": { "$ref": "#/$defs/legal_entity_type" },
+        "registered_address_line_1": { "type": "string" },
+        "registered_address_line_2": { "type": "string" },
+        "registered_city": { "type": "string" },
+        "registered_postcode": { "type": "string" },
+        "registered_country": { "type": "string" },
+        "company_country_of_establishment": { "type": "string" },
+        "date_of_birth": { "type": "string", "format": "date" },
+        "national_id_passport": { "type": "string" },
+        "preferred_contact_method": { "type": "string" },
+        "alternative_email": { "type": "string" },
+        "has_deferment_account": { "type": "boolean" },
+        "deferment_account_number": { "type": "string" },
+        "bank_account_name": { "type": "string" },
+        "bank_account_number": { "type": "string" },
+        "bank_sort_code": { "type": "string" },
+        "bank_iban": { "type": "string" },
+        "bank_swift": { "type": "string" },
+        "allows_agent_refund": { "type": "boolean" },
+        "authority_signed": { "type": "boolean" },
+        "authority_date": { "type": "string", "format": "date" },
+        "authority_document_id": { "type": "string" },
+        "engagement_letter_sent_date": { "type": "string", "format": "date" },
+        "engagement_letter_signed_date": { "type": "string", "format": "date" },
+        "engagement_type": { "$ref": "#/$defs/engagement_type" },
+        "acting_as_agent": { "type": "boolean" },
+        "hmrc_agent_authorised": { "type": "boolean" },
+        "hmrc_agent_reference": { "type": "string" },
+        "professional_clearance_received": { "type": "boolean" },
+        "previous_accountant": { "type": "string" },
+        "take_on_completed": { "type": "boolean" },
+        "aml_risk_rating": { "$ref": "#/$defs/aml_risk_rating" },
+        "aml_review_date": { "type": "string", "format": "date" },
+        "risk_review_frequency": { "$ref": "#/$defs/risk_review_frequency" },
+        "id_verified": { "type": "boolean" },
+        "id_verification_method": { "type": "string" },
+        "source_of_funds_checked": { "type": "boolean" },
+        "beneficial_owner_verified": { "type": "boolean" },
+        "psc_verified": { "type": "boolean" },
+        "pep_flag": { "type": "boolean" },
+        "ongoing_monitoring_flag": { "type": "boolean" },
+        "assigned_reviewer": { "type": "string" },
+        "aml_notes": { "type": "string" },
+        "utr": { "type": "string" },
+        "paye_reference": { "type": "string" },
+        "accounts_reference_date": { "type": "string", "format": "date" },
+        "corporation_tax_reference": { "type": "string" },
+        "vat_stagger": { "$ref": "#/$defs/vat_stagger" },
+        "vat_frequency": { "$ref": "#/$defs/vat_frequency" },
+        "vat_scheme": { "type": "string" },
+        "mtd_enabled": { "type": "boolean" },
+        "ni_number": { "type": "string" },
+        "self_assessment_utr": { "type": "string" },
+        "billing_model": { "$ref": "#/$defs/billing_model" },
+        "monthly_fee": { "type": "number" },
+        "credit_terms": { "type": "string" },
+        "payment_method": { "type": "string" },
+        "direct_debit_mandate_signed": { "type": "boolean" },
+        "last_fee_review_date": { "type": "string", "format": "date" },
+        "client_manager": { "type": "string" },
+        "partner": { "type": "string" },
+        "internal_rating": { "type": "string" },
+        "sector": { "type": "string" },
+        "year_end": { "type": "string" },
+        "software_used": { "$ref": "#/$defs/software_used" },
+        "payroll_frequency": { "$ref": "#/$defs/payroll_frequency" },
+        "notes": { "type": "string" },
+        "field_statuses": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/contact_field_status" }
+        },
+        "created_from_claim": { "type": "boolean" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "created_by": { "type": "string" },
+        "total_claims": { "type": "number" },
+        "last_used": { "type": "string", "format": "date-time" }
+      }
+    },
+    "contact_filter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "oneOf": [
+            { "$ref": "#/$defs/contact_type" },
+            { "type": "array", "items": { "$ref": "#/$defs/contact_type" } }
+          ]
+        },
+        "search": { "type": "string" },
+        "has_eori": { "type": "boolean" },
+        "has_vat": { "type": "boolean" },
+        "has_bank_details": { "type": "boolean" },
+        "allows_agent_refund": { "type": "boolean" },
+        "limit": { "type": "integer" },
+        "offset": { "type": "integer" },
+        "sort_by": {
+          "type": "string",
+          "enum": ["name", "created_at", "last_used", "total_claims"]
+        },
+        "sort_order": {
+          "type": "string",
+          "enum": ["asc", "desc"]
+        }
+      }
+    },
+    "contact_list_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contacts", "total_count", "page", "page_size", "has_more"],
+      "properties": {
+        "contacts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/contact" }
+        },
+        "total_count": { "type": "integer" },
+        "page": { "type": "integer" },
+        "page_size": { "type": "integer" },
+        "has_more": { "type": "boolean" }
+      }
+    },
+    "canonical_client_type": {
+      "type": "string",
+      "enum": ["COMPANY", "INDIVIDUAL", "SOLE_TRADER", "PARTNERSHIP", "LLP"]
+    },
+    "service_category": {
+      "type": "string",
+      "enum": ["COMPLIANCE", "TAX", "BOOKKEEPING", "PAYROLL", "ADVISORY", "SECRETARIAL", "FORMATION"]
+    },
+    "compliance_type": {
+      "type": "string",
+      "enum": ["NONE", "STATUTORY_FILING", "TAX_RETURN", "REGISTRATION", "ADVISORY_ONLY"]
+    },
+    "billing_type": {
+      "type": "string",
+      "enum": ["RECURRING", "ONE_TIME", "PROJECT"]
+    },
+    "billing_unit": {
+      "type": "string",
+      "enum": ["PER_MONTH", "PER_QUARTER", "PER_YEAR", "PER_RETURN", "PER_HOUR", "FIXED_FEE"]
+    },
+    "frequency": {
+      "type": "string",
+      "enum": ["WEEKLY", "MONTHLY", "QUARTERLY", "ANNUAL", "AD_HOC"]
+    },
+    "service_task_priority": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH", "URGENT"]
+    },
+    "service_task_status": {
+      "type": "string",
+      "enum": ["TODO", "IN_PROGRESS", "DONE"]
+    },
+    "service_template_task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "daysBeforeDue", "priority"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "daysBeforeDue": { "type": "integer" },
+        "priority": { "$ref": "#/$defs/service_task_priority" }
+      }
+    },
+    "service_template_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "serviceCode",
+        "displayName",
+        "category",
+        "complianceType",
+        "createsCompliance",
+        "defaultFrequency",
+        "billingType",
+        "billingUnit",
+        "clientTypes",
+        "taskTemplates"
+      ],
+      "properties": {
+        "serviceCode": { "type": "string" },
+        "displayName": { "type": "string" },
+        "description": { "type": "string" },
+        "reportCategory": { "type": "string" },
+        "category": { "$ref": "#/$defs/service_category" },
+        "complianceType": { "$ref": "#/$defs/compliance_type" },
+        "createsCompliance": { "type": "boolean" },
+        "defaultFrequency": { "$ref": "#/$defs/frequency" },
+        "billingType": { "$ref": "#/$defs/billing_type" },
+        "billingUnit": { "$ref": "#/$defs/billing_unit" },
+        "clientTypes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/canonical_client_type" }
+        },
+        "taskTemplates": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/service_template_task" }
+        }
+      }
+    },
+    "client_service_task_instance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "daysBeforeDue", "priority", "status"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "daysBeforeDue": { "type": "integer" },
+        "priority": { "$ref": "#/$defs/service_task_priority" },
+        "status": { "$ref": "#/$defs/service_task_status" }
+      }
+    },
+    "client_service_engagement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "clientId",
+        "serviceCode",
+        "displayName",
+        "category",
+        "complianceType",
+        "createsCompliance",
+        "frequency",
+        "billingType",
+        "billingUnit",
+        "feeAmount",
+        "startDate",
+        "isActive",
+        "taskInstances",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "clientId": { "type": "string" },
+        "serviceCode": { "type": "string" },
+        "displayName": { "type": "string" },
+        "category": { "$ref": "#/$defs/service_category" },
+        "complianceType": { "$ref": "#/$defs/compliance_type" },
+        "createsCompliance": { "type": "boolean" },
+        "frequency": { "$ref": "#/$defs/frequency" },
+        "billingType": { "$ref": "#/$defs/billing_type" },
+        "billingUnit": { "$ref": "#/$defs/billing_unit" },
+        "feeAmount": { "type": "number" },
+        "startDate": { "type": "string", "format": "date" },
+        "nextDue": { "type": "string", "format": "date" },
+        "isActive": { "type": "boolean" },
+        "taskInstances": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/client_service_task_instance" }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "client_document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document_id", "client_id", "document_type", "version", "file_path", "created_at"],
+      "properties": {
+        "document_id": { "type": "string" },
+        "client_id": { "type": "string" },
+        "document_type": { "type": "string" },
+        "category": { "type": "string" },
+        "version": { "type": "integer" },
+        "file_path": { "type": "string" },
+        "linked_mrn": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "companies_house_profile_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["success", "profile"],
+      "properties": {
+        "success": { "type": "boolean" },
+        "profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["company", "compliance", "officers", "psc", "charges", "filingHistory"],
+          "properties": {
+            "company": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "compliance": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["accounts", "confirmationStatement"],
+              "properties": {
+                "accounts": {
+                  "type": ["object", "null"],
+                  "additionalProperties": true
+                },
+                "confirmationStatement": {
+                  "type": ["object", "null"],
+                  "additionalProperties": true
+                }
+              }
+            },
+            "officers": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["total", "active", "resigned", "items"],
+              "properties": {
+                "total": { "type": "integer" },
+                "active": { "type": "integer" },
+                "resigned": { "type": "integer" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "psc": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["total", "active", "ceased", "items"],
+              "properties": {
+                "total": { "type": "integer" },
+                "active": { "type": "integer" },
+                "ceased": { "type": "integer" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "charges": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "filingHistory": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    },
+    "client_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "contact",
+        "bankStatus",
+        "cdsAgreement",
+        "agentAuthorisation",
+        "cdsData",
+        "claims",
+        "potentialRefunds",
+        "documents",
+        "tasks",
+        "complianceFlags",
+        "alerts",
+        "missingFields"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "contact": { "$ref": "#/$defs/contact" },
+        "eori": { "type": "string" },
+        "vatNumber": { "type": "string" },
+        "bankStatus": { "type": "string", "enum": ["complete", "missing"] },
+        "deferredAccountNumber": { "type": "string" },
+        "cdsAgreement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "enum": ["active", "expiring", "required", "pending"] },
+            "expiresOn": { "type": "string", "format": "date" }
+          }
+        },
+        "agentAuthorisation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "enum": ["valid", "expiring", "missing"] },
+            "expiresOn": { "type": "string", "format": "date" }
+          }
+        },
+        "cdsData": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["declarations", "anomalies", "overpayments"],
+          "properties": {
+            "declarations": { "type": "integer" },
+            "anomalies": { "type": "integer" },
+            "overpayments": { "type": "integer" },
+            "lastImport": { "type": "string", "format": "date-time" }
+          }
+        },
+        "claims": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["total", "inProgress", "approved", "estimatedRefund"],
+          "properties": {
+            "total": { "type": "integer" },
+            "inProgress": { "type": "integer" },
+            "approved": { "type": "integer" },
+            "estimatedRefund": { "type": "number" },
+            "lastClaimDate": { "type": "string", "format": "date" }
+          }
+        },
+        "potentialRefunds": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "documents": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "tasks": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "complianceFlags": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "alerts": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "missingFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

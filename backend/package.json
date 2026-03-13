@@ -1,0 +1,33 @@
+{
+  "name": "m-practice-next-backend",
+  "version": "1.0.0",
+  "description": "M Practice Manager (Next) backend service",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --config nodemon.json src/server.js",
+    "start": "node src/server.js",
+    "build": "echo 'No build step required for Express backend'",
+    "test": "echo \"Tests coming soon\""
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "better-sqlite3": "^11.10.0",
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^8.0.2",
+    "pg": "^8.11.3",
+    "playwright-core": "^1.58.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
