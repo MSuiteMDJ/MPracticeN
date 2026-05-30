@@ -1,148 +1,256 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Accounts Approval Letter - {{client.name}}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <title>Accounts Approval Letter – {{client_name}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --theme-colour: #2c2c2c; /* Dark theme to complement metallic logo */
-      --border: #dcdcdc;
-      --text: #111827;
+      --primary: #2C2C2C; /* Defaulting to Formal Black */
+      --primary-soft: #F3F4F6;
+      --border: #D1D5DB;
+      --text-main: #111827;
+      --text-muted: #4B5563;
+      --bg-app: #F9FAFB;
+      --sidebar-w: 260px;
     }
 
-    html, body {
+    .purple-theme {
+      --primary: #6A1B9A;
+      --primary-soft: #F3E5F5;
+    }
+
+    * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+
+    body {
       margin: 0;
-      padding: 0;
-      font-family: 'Roboto', Arial, sans-serif;
-      color: var(--text);
-      background: #f7f7f7;
-      line-height: 1.65;
-    }
-
-    .header-full {
-      width: 100%;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      background: var(--bg-app);
       display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 25px 40px 5px 40px;
     }
 
-    .header-full img.logo {
-      width: 90px;
-      height: auto;
+    /* --- SIDEBAR --- */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: #ffffff;
+      height: 100vh;
+      position: fixed;
+      border-right: 1px solid var(--border);
+      padding: 30px 20px;
+      z-index: 100;
     }
 
-    .header-full h1 {
-      font-size: 30px;
-      font-weight: 700;
-      color: var(--theme-colour);
-      margin: 0;
-      letter-spacing: 0.5px;
-    }
-
-    .header-line {
-      border: 0;
-      border-bottom: 3px solid var(--theme-colour);
-      margin: 5px 0 10px 0;
-    }
-
-    .container {
-      max-width: 920px;
-      margin: 30px auto;
-      background: #fff;
-      padding: 40px;
+    .btn-toggle {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
     }
 
-    .info-box {
-      background: #f0f0f0;
-      border-left: 4px solid var(--theme-colour);
-      padding: 16px 20px;
-      border-radius: 6px;
-      margin: 22px 0;
+    .btn-toggle.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* --- CONTENT --- */
+    .content-wrapper {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 50px 80px;
+      max-width: 1100px;
     }
 
-    .footer {
-      margin-top: 40px;
-      border-top: 2px solid var(--theme-colour);
-      padding-top: 20px;
-      font-size: 12px;
-      text-align: center;
-      color: #555;
+    .letter-paper {
+      background: white;
+      padding: 60px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      min-height: 29.7cm;
+    }
+
+    .letter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 4px solid var(--primary);
+      padding-bottom: 25px;
+      margin-bottom: 40px;
+    }
+
+    .logo-container img { height: 75px; width: auto; }
+
+    .section-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+      margin: 35px 0 15px 0;
+      font-weight: 800;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 5px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin: 30px 0;
+    }
+
+    .highlight-box {
+      background: var(--primary-soft);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .deadline-card {
+      border: 1px solid #FEE2E2;
+      background: #FFFBFB;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    @media print {
+      .sidebar { display: none; }
+      .content-wrapper { margin-left: 0; padding: 0; }
+      .letter-paper { border: none; box-shadow: none; }
     }
   </style>
+
+  <script>
+    function toggleTheme(theme) {
+      document.body.className = theme;
+      document.getElementById('pBtn').classList.toggle('active', theme === 'purple-theme');
+      document.getElementById('bBtn').classList.toggle('active', theme === 'black-theme');
+      const logoUrl = theme === 'black-theme' ? '{{logo_black_url}}' : '{{logo_purple_url}}';
+      document.getElementById('sideLogo').src = logoUrl;
+      document.getElementById('headLogo').src = logoUrl;
+    }
+  </script>
 </head>
 
-<body>
+<body class="black-theme">
 
-<div class="header-full">
-  <img src="/M_Logo_Black.png" class="logo" alt="Practice Logo">
-  <h1>Accounts Approval Letter</h1>
-</div>
+  <nav class="sidebar">
+    <img id="sideLogo" src="{{logo_black_url}}" alt="Logo" style="max-width: 130px; margin-bottom: 20px;" />
+    <small style="font-weight: bold; color: var(--text-muted); font-size: 10px;">BRANDING PREVIEW</small>
+    <button id="bBtn" class="btn-toggle active" onclick="toggleTheme('black-theme')">Black (Formal)</button>
+    <button id="pBtn" class="btn-toggle" onclick="toggleTheme('purple-theme')">Purple (Client)</button>
+  </nav>
 
-<hr class="header-line">
+  <main class="content-wrapper">
+    <div class="letter-paper">
+      
+      <header class="letter-header">
+        <div class="logo-container">
+          <img id="headLogo" src="{{logo_black_url}}" alt="Practice Logo" />
+        </div>
+        <div style="text-align: right;">
+          <h1 style="margin: 0; font-size: 24px; color: var(--primary);">Annual Accounts Approval</h1>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Date: {{today}}</p>
+        </div>
+      </header>
 
-<div class="container">
+      <div class="info-grid">
+        <div>
+          <strong style="color: var(--primary);">Client:</strong><br>
+          <strong>{{client_name}}</strong><br>
+          {{client_registered_address}}
+        </div>
+        <div style="text-align: right;">
+          <strong>Year Ended:</strong> {{accounts_year_end}}<br>
+          <strong>Company Number:</strong> {{company_number}}
+        </div>
+      </div>
 
-  <p style="text-align:right">
-    <strong>{{practice.name}}</strong><br>
-    {{practice.address}}<br>
-    Email: {{practice.email}}<br>
-    Phone: {{practice.phone}}
-  </p>
+      <p>Dear {{client_contact_name}},</p>
 
-  <p>{{today}}</p>
+      <p>
+        We have prepared the draft financial statements for <strong>{{client_name}}</strong> for the year ended <strong>{{accounts_year_end}}</strong>. 
+        These accounts have been prepared based on the records provided and the information gathered during our year-end review.
+      </p>
 
-  <p>
-    <strong>{{client.name}}</strong><br>
-    {{client.registered_address}}
-  </p>
+      <div class="section-title">Financial Summary</div>
+      <div class="highlight-box">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center;">
+          <div>
+            <span style="font-size: 10px; text-transform: uppercase; color: var(--text-muted);">Turnover</span><br>
+            <strong style="font-size: 18px;">£{{accounts_turnover}}</strong>
+          </div>
+          <div>
+            <span style="font-size: 10px; text-transform: uppercase; color: var(--text-muted);">Net Profit (Pre-Tax)</span><br>
+            <strong style="font-size: 18px;">£{{accounts_profit}}</strong>
+          </div>
+          <div>
+            <span style="font-size: 10px; text-transform: uppercase; color: var(--text-muted);">Tax Provision</span><br>
+            <strong style="font-size: 18px; color: #B91C1C;">£{{accounts_tax_due}}</strong>
+          </div>
+        </div>
+      </div>
 
-  <p>Dear {{client.contact_name}},</p>
+      <div class="section-title">Critical Filing Deadlines</div>
+      <p style="font-size: 13px;">To avoid statutory late filing penalties, these accounts must be approved and submitted by the following dates:</p>
+      
+      <div class="deadline-card">
+        <div>
+          <strong style="font-size: 14px;">Companies House Filing</strong><br>
+          <span style="font-size: 12px; color: var(--text-muted);">Statutory accounts submission</span>
+        </div>
+        <div style="text-align: right;">
+          <strong style="color: #B91C1C;">{{accounts_due_date}}</strong>
+        </div>
+      </div>
 
-  <p>
-    We have prepared the draft financial statements for the year ended 
-    <strong>{{accounts.year_end}}</strong>, together with the accompanying corporation tax 
-    computations and supporting documents where applicable.
-  </p>
+      <div class="deadline-card" style="border-color: #E5E7EB; background: #fff;">
+        <div>
+          <strong style="font-size: 14px;">Corporation Tax (CT600)</strong><br>
+          <span style="font-size: 12px; color: var(--text-muted);">HMRC Tax Return submission</span>
+        </div>
+        <div style="text-align: right;">
+          <strong>{{ct_due_date}}</strong>
+        </div>
+      </div>
 
-  <div class="info-box">
-    <p><strong>Client:</strong> {{client.name}}</p>
-    <p><strong>Year End:</strong> {{accounts.year_end}}</p>
-    <p><strong>Approval Required By:</strong> {{accounts.approval_due}}</p>
-    <p><strong>Responsible Manager:</strong> {{accounts.manager}}</p>
-  </div>
+      <div class="section-title">Action Required</div>
+      <p style="font-size: 14px; line-height: 1.7;">
+        Please review the attached draft accounts and tax computations. If you are satisfied that they represent a true and fair view of the company’s affairs, please sign and return the approval page by <strong>{{accounts_approval_due}}</strong>.
+      </p>
 
-  <p>
-    Please review the attached draft accounts and let us know if you approve them for filing.
-    If you require any amendments, please inform us before the approval deadline shown above.
-  </p>
+      <div class="highlight-box" style="background: #FFFBEB; border: 1px solid #FEF3C7; font-size: 13px;">
+        <strong>Note:</strong> Once approved, we will finalize the submission to Companies House and HMRC on your behalf as your authorized agents.
+      </div>
 
-  <p>{{accounts.notes}}</p>
+      <div style="margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
+        <div>
+          <div style="border-top: 2px solid var(--text-main); margin-top: 40px; padding-top: 10px; font-weight: 700;">
+            For {{practice_name}}
+          </div>
+          <p style="font-size: 12px;">{{practice_contact}}<br>Engagement Manager</p>
+        </div>
+        <div style="text-align: right;">
+          <div style="border-top: 2px solid var(--text-main); margin-top: 40px; padding-top: 10px; font-weight: 700;">
+            Accepted for {{client_name}}
+          </div>
+          <p style="font-size: 12px;">{{client_contact_name}}<br>Director</p>
+        </div>
+      </div>
 
-  <p>
-    Once approved, we will finalise the accounts and proceed with submission to Companies House
-    and HMRC (where relevant), in line with statutory deadlines and our agreed engagement.
-  </p>
+      <footer style="margin-top: 80px; text-align: center; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 20px;">
+        <strong>{{practice_name}}</strong> • {{practice_address}}<br>
+        <em>Reference: {{client_ref}} • Year End: {{accounts_year_end}}</em>
+      </footer>
 
-  <p>Kind regards,</p>
-
-  <p>
-    <strong>{{practice.contact}}</strong><br>
-    {{practice.name}}
-  </p>
-
-  <div class="footer">
-    <strong>{{practice.name}}</strong><br>
-    {{practice.address}}<br>
-    Email: {{practice.email}} &nbsp; | &nbsp; Phone: {{practice.phone}}<br>
-    <em>Draft accounts approval letter. © {{year}} {{practice.name}}.</em>
-  </div>
-
-</div>
-
+    </div>
+  </main>
 </body>
 </html>

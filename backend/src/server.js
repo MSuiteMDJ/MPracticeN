@@ -12,6 +12,7 @@ import settingsRoutes from './routes/settings.routes.js';
 import documentsRoutes from './routes/documents.routes.js';
 import reportsRoutes from './routes/reports.routes.js';
 import auditRoutes from './routes/audit.routes.js';
+import accountsProductionRoutes from './routes/accounts-production.routes.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 import { requireModuleAccess, tenantMiddleware } from './middleware/tenant.js';
 import { initAuthDatabase } from './config/auth-database.js';
@@ -116,6 +117,7 @@ app.use('/settings', tenantMiddleware, requireModuleAccess('settings'), settings
 app.use('/documents', tenantMiddleware, requireModuleAccess('documents'), documentsRoutes);
 app.use('/reports', tenantMiddleware, requireModuleAccess('reports'), reportsRoutes);
 app.use('/audit', tenantMiddleware, requireModuleAccess('audit'), auditRoutes);
+app.use('/accounts-sets', tenantMiddleware, requireModuleAccess('accounts_production'), accountsProductionRoutes);
 
 // Onboarding routes (from existing frontend)
 app.get('/onboarding/clients', tenantMiddleware, requireModuleAccess('onboarding'), (req, res) => {

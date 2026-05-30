@@ -34,6 +34,8 @@ const PERMISSION_DEFINITIONS = [
   ['analysis.write', 'analysis', 'write', 'Manage analysis'],
   ['onboarding.read', 'onboarding', 'read', 'View onboarding'],
   ['onboarding.write', 'onboarding', 'write', 'Manage onboarding'],
+  ['accounts_production.read', 'accounts_production', 'read', 'View accounts production'],
+  ['accounts_production.write', 'accounts_production', 'write', 'Manage accounts production'],
 ];
 
 const ROLE_DEFINITIONS = [
@@ -64,6 +66,7 @@ const ROLE_DEFINITIONS = [
       'claims.read', 'claims.write',
       'analysis.read',
       'onboarding.read', 'onboarding.write',
+      'accounts_production.read', 'accounts_production.write',
     ],
   },
   {
@@ -82,6 +85,7 @@ const ROLE_DEFINITIONS = [
       'settings.read',
       'audit.read',
       'onboarding.read', 'onboarding.write',
+      'accounts_production.read', 'accounts_production.write',
     ],
   },
   {
@@ -100,6 +104,7 @@ const ROLE_DEFINITIONS = [
       'settings.read',
       'audit.read',
       'onboarding.read',
+      'accounts_production.read',
     ],
   },
 ];

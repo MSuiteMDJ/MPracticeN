@@ -26,6 +26,7 @@ import HMRCResources from '@/components/knowledge/HMRCResources';
 import AssistPanel from '@/components/assist/AssistPanel';
 import { ShellLayout } from '@/components/layout/AppShellLayout';
 import DocumentTemplates from '@/components/DocumentTemplates';
+import AccountsProduction from '@/components/AccountsProduction';
 import DemoModeIndicator from '@/components/DemoModeIndicator';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -224,6 +225,17 @@ function AppContent() {
           <ProtectedRoute>
             <ShellLayout>
               <Reports />
+              <AssistPanel />
+            </ShellLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/accounts-production"
+        element={
+          <ProtectedRoute>
+            <ShellLayout>
+              <AccountsProduction />
               <AssistPanel />
             </ShellLayout>
           </ProtectedRoute>

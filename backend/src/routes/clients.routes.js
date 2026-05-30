@@ -2077,4 +2077,83 @@ router.post('/:id/contacts', async (req, res, next) => {
   }
 });
 
+// ============================================================
+// Client Service Engagements
+// ============================================================
+
+function getServicesStore() {
+  if (!storage.clientServices) storage.clientServices = new Map();
+  return storage.clientServices;
+}
+
+// GET /clients/services — list all services (optionally filtered by clientId)
+router.get('/services', (req, res, next) => {
+  try {
+    const clientId = String(req.query.clientId || '').trim();
+    const services = Array.from(getServicesStore().values())
+      .filter(s => s.user_id === req.userId)
+      .filter(s => clientId ? s.clientId === clientId : true)
+      .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+    res.json({ services });
+  } catch (err) { next(err); }
+});
+
+// POST /clients/services — create a service engagement
+router.post('/services', (req, res, next) => {
+  try {
+    const body = req.body || {};
+    const now = new Date().toISOString();
+    const service = {
+      ...body,
+      id: body.id || uuidv4(),
+      user_id: req.userId,
+      createdAt: body.createdAt || now,
+      updatedAt: now,
+    };
+    getServicesStore().set(service.id, service);
+    res.status(201).json({ service });
+  } catch (err) { next(err); }
+});
+
+// PATCH /clients/services/:id — update a service engagement
+router.patch('/services/:id', (req, res, next) => {
+  try {
+    const existing = getServicesStore().get(req.params.id);
+    if (!existing || existing.user_id !== req.userId) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+    const updated = { ...existing, ...req.body, id: existing.id, user_id: req.userId, updatedAt: new Date().toISOString() };
+    getServicesStore().set(updated.id, updated);
+    res.json({ service: updated });
+  } catch (err) { next(err); }
+});
+
+// PATCH /clients/services/:id/tasks/:taskId — update a task on a service
+router.patch('/services/:id/tasks/:taskId', (req, res, next) => {
+  try {
+    const existing = getServicesStore().get(req.params.id);
+    if (!existing || existing.user_id !== req.userId) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+    const taskInstances = (existing.taskInstances || []).map(t =>
+      t.id === req.params.taskId ? { ...t, ...req.body } : t
+    );
+    const updated = { ...existing, taskInstances, updatedAt: new Date().toISOString() };
+    getServicesStore().set(updated.id, updated);
+    res.json({ service: updated });
+  } catch (err) { next(err); }
+});
+
+// DELETE /clients/services/:id — delete a service engagement
+router.delete('/services/:id', (req, res, next) => {
+  try {
+    const existing = getServicesStore().get(req.params.id);
+    if (!existing || existing.user_id !== req.userId) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+    getServicesStore().delete(req.params.id);
+    res.json({ success: true });
+  } catch (err) { next(err); }
+});
+
 export default router;

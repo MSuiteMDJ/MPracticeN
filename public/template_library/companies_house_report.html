@@ -2,130 +2,393 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Companies House Report – {{company_name}}</title>
+  <title>Companies House & Corporate Intelligence – {{company_name}}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     /* =========================================================
-       BASE (applies to both themes)
+       THEME SYSTEM & VARIABLES
     ========================================================== */
-    :root{
-      /* default tokens will be overridden by the theme class on <body> */
-      --theme-colour:#6A1B9A;
-      --accent:#8E24AA;
-      --soft:#F3E5F5;
-      --soft2:#E1BEE7;
-      --border:#d6c3e8;
-      --text:#1f1f1f;
+    :root {
+      --theme-colour: #6A1B9A;
+      --accent: #8E24AA;
+      --soft: #F3E5F5;
+      --soft2: #E1BEE7;
+      --border: #d6c3e8;
+      --border-light: #EAEAEA;
+      --text: #1f1f1f;
+      --text-muted: #555555;
+      --bg-card: #FFFFFF;
 
-      --success:#16a34a;
-      --warning:#d97706;
-      --danger:#dc2626;
-      --neutral:#6c757d;
+      /* Global Semantic Status Flags */
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --neutral: #6c757d;
+      
+      /* Context Badges */
+      --status-low-bg: #E8F5E9;
+      --status-low-text: #2E7D32;
+      --status-med-bg: #FFF3E0;
+      --status-med-text: #E65100;
+      --status-high-bg: #FFEBEE;
+      --status-high-text: #C62828;
     }
 
-    html,body{
-      margin:0; padding:0;
-      font-family:'Roboto', Arial, sans-serif;
-      color:var(--text); background:#fff; line-height:1.6;
+    .purple-theme {
+      --theme-colour: #6A1B9A;
+      --accent: #8E24AA;
+      --soft: #F3E5F5;
+      --soft2: #E1BEE7;
+      --border: #d6c3e8;
+      --text: #1f1f1f;
     }
 
-    .header-full{
-      width:100%; display:flex; align-items:center; gap:22px;
-      padding:25px 40px 6px 40px;
-    }
-    .header-full img.logo{ width:95px; height:auto; }
-    .header-full h1{ font-size:32px; font-weight:700; margin:0; color:var(--theme-colour); letter-spacing:.4px; }
-
-    .header-line{ border:0; border-bottom:3px solid var(--theme-colour); margin:6px 0 18px 0; }
-
-    .container{ max-width:1100px; margin:auto; padding:0 40px 40px 40px; }
-
-    .section-title{
-      color:var(--theme-colour); font-size:22px; font-weight:700;
-      margin-top:34px; margin-bottom:12px; border-left:5px solid var(--theme-colour); padding-left:12px;
-    }
-
-    .card{
-      background:#fff; border:1px solid var(--border);
-      border-radius:10px; padding:20px; margin-bottom:20px;
-    }
-
-    .info-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
-
-    .gradient-welcome{
-      background:linear-gradient(135deg,var(--soft) 0%, var(--soft2) 100%);
-      padding:22px; border-radius:10px; border:1px solid var(--border); margin:10px 0 24px 0;
-    }
-    .gradient-welcome h2{ margin:0 0 8px 0; font-size:24px; color:var(--accent); }
-    .small{ font-size:.9em; color:#555; }
-
-    table{ width:100%; border-collapse:collapse; margin:12px 0; }
-    th,td{ border:1px solid var(--border); padding:10px 12px; text-align:left; vertical-align:top; background:#fff; }
-    th{ background:var(--soft); color:var(--theme-colour); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.05em; }
-    tr.historical-row td{ background:#f5f5fb; }
-
-    .badge{ padding:4px 8px; border-radius:5px; font-size:.85em; font-weight:700; color:#fff; display:inline-block; }
-    .success{ background:var(--success); }
-    .warning{ background:var(--warning); color:#111; }
-    .danger{ background:var(--danger); }
-    .neutral{ background:var(--neutral); }
-
-    pre{ background:#faf5fd; border:1px solid var(--border); padding:15px; overflow-x:auto; font-size:.85em; white-space:pre-wrap; }
-
-    .footer{ margin-top:40px; border-top:2px solid var(--theme-colour); padding:16px 0 0 0; font-size:12px; text-align:center; color:#555; }
-
-    /* =========================================================
-       THEME: PurpleD (client-facing)
-    ========================================================== */
-    .purple-theme{
-      --theme-colour:#6A1B9A;
-      --accent:#8E24AA;
-      --soft:#F3E5F5;
-      --soft2:#E1BEE7;
-      --border:#d6c3e8;
-      --text:#1f1f1f;
+    .black-theme {
+      --theme-colour: #2C2C2C;
+      --accent: #3A3A3A;
+      --soft: #F2F2F2;
+      --soft2: #E8E8E8;
+      --border: #d0d0d0;
+      --text: #111111;
     }
 
     /* =========================================================
-       THEME: Black (compliance / HMRC)
+       BASE LAYOUT DECORATION
     ========================================================== */
-    .black-theme{
-      --theme-colour:#2C2C2C;
-      --accent:#3A3A3A;
-      --soft:#F2F2F2;
-      --soft2:#E8E8E8;
-      --border:#d0d0d0;
-      --text:#111111;
+    * { 
+      box-sizing: border-box; 
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+    }
+
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      color: var(--text);
+      background: #FFFFFF;
+      font-size: 13px;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+
+    /* --- TOP UTILITY CONTROLS (Screen Only) --- */
+    .theme-tabs { 
+      display: flex; 
+      gap: 12px; 
+      padding: 12px 40px; 
+      background: #F5F5F7; 
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .theme-tabs-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: auto;
+    }
+    .theme-tab {
+      padding: 6px 14px; 
+      border-radius: 6px; 
+      cursor: pointer;
+      border: 1px solid #D1D5DB; 
+      background: #FFFFFF; 
+      font-weight: 600; 
+      font-size: 11px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .theme-tab.active { 
+      background: var(--theme-colour); 
+      border-color: var(--theme-colour); 
+      color: #FFFFFF; 
+    }
+
+    /* --- CONTAINER CONTAINER --- */
+    .container { 
+      max-width: 1100px; 
+      margin: auto; 
+      padding: 40px; 
+    }
+
+    /* --- HEADER BLOCK --- */
+    .header-full {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+    .brand-meta-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--theme-colour);
+      margin: 0 0 4px 0;
+    }
+    .header-full h1 { 
+      font-size: 28px; 
+      font-weight: 800; 
+      margin: 0; 
+      color: var(--text); 
+      letter-spacing: -0.02em; 
+      line-height: 1.1;
+    }
+    .header-full img.logo { 
+      height: 44px; 
+      width: auto; 
+      object-fit: contain; 
+    }
+    .header-subtitle-line {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+    .header-line { 
+      border: 0; 
+      border-bottom: 2px solid var(--theme-colour); 
+      margin: 16px 0 24px 0; 
+    }
+
+    /* --- DATA HERO OPERATIONAL STRIP --- */
+    .operational-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 1px solid var(--border);
+      background: #FAF9F6;
+      border-radius: 6px;
+      margin-bottom: 24px;
+    }
+    .strip-cell {
+      padding: 10px 14px;
+      border-right: 1px solid var(--border);
+    }
+    .strip-cell:last-child {
+      border-right: none;
+    }
+    .strip-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+    .strip-value {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* --- EXPLICIT CONTEXT NOTIFICATION PANEL --- */
+    .action-panel {
+      border: 1px solid #FFB300;
+      background: #FFFDE7;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+    }
+    .action-panel h4 {
+      margin: 0 0 6px 0;
+      color: #875A00;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .action-list {
+      margin: 0;
+      padding-left: 16px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .action-list li {
+      margin-bottom: 2px;
+    }
+
+    /* --- SECTION HEADERS --- */
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      margin: 32px 0 12px 0;
+      font-weight: 800;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--text);
+    }
+
+    /* --- HIGH DENSITY DOT-LEADER PROFILE MATRIX --- */
+    .panel-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .field-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .field {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 5px 0;
+      font-size: 13px;
+    }
+    .field-label {
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+    .field-dot-leader {
+      flex-grow: 1;
+      border-bottom: 1px dotted #BBBBBB;
+      margin-bottom: 4px;
+      min-width: 12px;
+    }
+    .field-value {
+      font-weight: 700;
+      text-align: right;
+      color: var(--text);
+      padding-left: 8px;
+      white-space: nowrap;
+    }
+
+    /* --- TEXTUAL ADVISORY BLOCKS --- */
+    .notes-panel {
+      border: 1px solid var(--border);
+      background: #F9FAFB;
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .notes-content {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    /* --- CHIPS, BADGES & STATUS INDICATORS --- */
+    .badge { 
+      padding: 3px 7px; 
+      border-radius: 4px; 
+      font-size: 10px; 
+      font-weight: 700; 
+      color: #FFFFFF; 
+      display: inline-block; 
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .badge.success { background: var(--success); }
+    .badge.warning { background: var(--warning); color: #111111; }
+    .badge.danger { background: var(--danger); }
+    .badge.neutral { background: var(--neutral); }
+
+    .status-chip {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    .status-chip.low { background: var(--status-low-bg); color: var(--status-low-text); }
+    .status-chip.medium { background: var(--status-med-bg); color: var(--status-med-text); }
+    .status-chip.high { background: var(--status-high-bg); color: var(--status-high-text); }
+    .status-chip.complete { background: #E8F5E9; color: #2E7D32; }
+
+    /* --- SOLID DATA TABLES --- */
+    .table-container {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 6px;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+    th {
+      background: var(--soft);
+      color: var(--theme-colour);
+      padding: 8px 12px;
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: top;
+      color: var(--text);
+      background: #FFFFFF;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr.historical-row td { 
+      background: #F9FAFB; 
+    }
+    
+    pre { 
+      background: #FAF5FD; 
+      border: 1px solid var(--border); 
+      padding: 14px; 
+      overflow-x: auto; 
+      font-size: 11px; 
+      white-space: pre-wrap; 
+      margin: 6px 0 0 0;
+      border-radius: 6px;
+      color: var(--text);
+    }
+
+    /* --- CONTROLLABLE DATA HIDING STRUCTS --- */
+    .conditional-section {
+      display: block;
+    }
+    .hidden-node {
+      display: none !important;
+    }
+
+    /* --- FOOTER REGISTRY --- */
+    .footer {
+      margin-top: 48px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 2px solid var(--theme-colour);
+      padding-top: 16px;
+      line-height: 1.5;
     }
 
     /* =========================================================
-       THEME TABS (screen only; hidden on print)
+       PRINT ARCHITECTURE MATCHING INTERIOR ENGINES
     ========================================================== */
-    .theme-tabs{ display:flex; gap:12px; padding:14px 40px 0 40px; }
-    .theme-tab{
-      padding:10px 18px; border-radius:8px; cursor:pointer;
-      border:1px solid #ccc; background:#f9f9f9; font-weight:600; transition:.2s; user-select:none;
-    }
-    .theme-tab.active{ background:var(--theme-colour); border-color:var(--theme-colour); color:#fff; }
-
-    /* =========================================================
-       PRINT
-       - Hide tabs for print/PDF
-       - Keep colours accurate
-    ========================================================== */
-    @media print{
-      .theme-tabs, .theme-tab{ display:none !important; visibility:hidden !important; }
-      *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    }
-
-    @media (max-width: 820px){
-      .info-grid{ grid-template-columns:1fr; }
-      .header-full{ padding:16px 16px 6px 16px; }
-      .container{ padding:0 16px 24px 16px; }
-      .theme-tabs{ padding:10px 16px 0 16px; }
+    @media print {
+      .theme-tabs { display: none !important; visibility: hidden !important; }
+      body { background: #FFFFFF; color: #000000; }
+      .container { padding: 0; width: 100%; max-width: 100%; }
+      .operational-strip { background: #FFFFFF; border: 1px solid #000000; }
+      .operational-strip .strip-cell { border-right: 1px solid #000000; }
+      .action-panel { background: #FFFFFF; border: 1px solid #000000; }
+      .notes-panel { background: #FFFFFF; border: 1px dashed #000000; }
+      th { background: #EFEFEF !important; color: #000000 !important; border-bottom: 1px solid #000000 !important; }
+      td { border-bottom: 1px solid #E0E0E0 !important; }
+      .table-container { border: 1px solid #000000; page-break-inside: avoid; }
+      @page { margin: 1.2cm; }
     }
   </style>
 
@@ -134,92 +397,182 @@
       document.body.classList.remove('purple-theme','black-theme');
       document.body.classList.add(theme);
 
-      // Tab UI
       document.getElementById('purpleTab').classList.toggle('active', theme==='purple-theme');
       document.getElementById('blackTab').classList.toggle('active', theme==='black-theme');
 
-      // Swap logo
       const logo = document.getElementById('chLogo');
       logo.src = (theme==='black-theme') ? '{{logo_black_url}}' : '{{logo_purple_url}}';
-      logo.alt = (theme==='black-theme') ? 'M Practice Manager Logo (Black)' : 'M Practice Manager Logo (Purple)';
     }
 
+    // Dynamic Client-vs-CH Pipeline Layout Sanitizer
     document.addEventListener('DOMContentLoaded', function(){
-      // Default to Purple (client-facing). To default to Black, set body class below.
       switchTheme(document.body.classList.contains('black-theme') ? 'black-theme' : 'purple-theme');
+
+      // Detect active pipeline via generated template tokens
+      const hasClientData = "{{client_type}}".trim() !== "" && "{{client_type}}" !== "\{\{client_type\}\}" && "{{client_type}}" !== "No Data";
+      const taskRowsText = "{{task_rows}}".trim();
+      const hasTaskRows = taskRowsText !== "" && taskRowsText !== "\{\{task_rows\}\}" && !taskRowsText.includes("No Data Row");
+
+      // Context optimization: If no localized Tasks or CRM variables exist, hide internal blocks cleanly
+      if (!hasClientData && !hasTaskRows) {
+        document.querySelectorAll('.crm-only').forEach(el => el.classList.add('hidden-node'));
+      }
     });
   </script>
 </head>
 
-<!-- Change to class="black-theme" if you want Black as the default -->
 <body class="purple-theme">
 
-  <!-- THEME SELECTOR (hidden on print/PDF) -->
-  <div class="theme-tabs">
-    <div id="purpleTab" class="theme-tab active" onclick="switchTheme('purple-theme')">Purple</div>
-    <div id="blackTab"  class="theme-tab"        onclick="switchTheme('black-theme')">Black</div>
-  </div>
-
-  <!-- HEADER -->
-  <div class="header-full">
-    <img id="chLogo" class="logo" src="{{logo_purple_url}}" alt="M Practice Manager Logo (Purple)" />
-    <h1>Companies House Report</h1>
-  </div>
-  <hr class="header-line" />
+  <nav class="theme-tabs">
+    <span class="theme-tabs-label">Dossier Workspace View Mode:</span>
+    <div id="purpleTab" class="theme-tab active" onclick="switchTheme('purple-theme')">Purple Theme (Client-Facing)</div>
+    <div id="blackTab"  class="theme-tab"        onclick="switchTheme('black-theme')">Black Theme (Regulatory Board)</div>
+  </nav>
 
   <div class="container">
-
-    <!-- WELCOME / CONTEXT -->
-    <div class="gradient-welcome">
-      <h2>{{company_name}} · Company number {{company_number}}</h2>
-      <div class="small">Generated {{generated_date}} at {{generated_time}}</div>
-    </div>
-
-    <!-- PROFILE -->
-    <div class="section-title">Company Profile</div>
-    <div class="info-grid">
-      <div class="card">
-        <h3 style="margin-top:0;color:var(--accent);">Basic Information</h3>
-        <p><strong>Company Name:</strong> {{company_name}}</p>
-        <p><strong>Company Number:</strong> {{company_number}}</p>
-        <p><strong>Status:</strong> <span class="badge {{company_status_badge_class}}">{{company_status}}</span></p>
-        <p><strong>Company Type:</strong> {{company_type}}</p>
-        <p><strong>Incorporated:</strong> {{company_incorporated}}</p>
-        <p><strong>Jurisdiction:</strong> {{company_jurisdiction}}</p>
+    
+    <header class="report-header">
+      <div class="header-full">
+        <div>
+          <p class="brand-meta-tag">Companies House & Practice Corporate Intelligence Dossier</p>
+          <h1>{{company_name}}</h1>
+        </div>
+        <img id="chLogo" class="logo" src="{{logo_purple_url}}" alt="Practice Manager Corporate Logo" />
       </div>
-
-      <div class="card">
-        <h3 style="margin-top:0;color:var(--accent);">Registered Office</h3>
-        <p>{{company_registered_office}}</p>
+      <div class="header-subtitle-line">
+        Official Registration Number: <strong>{{company_number}}</strong> &bull; Report Compiled: <strong>{{generated_date}}</strong> at <strong>{{generated_time}}</strong>
       </div>
+    </header>
+    <hr class="header-line" />
 
-      <div class="card">
-        <h3 style="margin-top:0;color:var(--accent);">Business Activity</h3>
-        <p><strong>SIC Codes:</strong> {{company_sic_codes}}</p>
-        <p><strong>Can File:</strong> {{company_can_file}}</p>
-        <p><strong>Has Charges:</strong> {{company_has_charges}}</p>
-        <p><strong>Has Insolvency History:</strong> {{company_has_insolvency_history}}</p>
+    <div class="operational-strip">
+      <div class="strip-cell">
+        <div class="strip-label">AML Risk Rating</div>
+        <div class="strip-value">{{aml_risk_rating}}</div>
       </div>
-
-      <div class="card">
-        <h3 style="margin-top:0;color:var(--accent);">Compliance Status</h3>
-        <p><strong>Next Accounts Due:</strong> {{accounts_next_due}}
-          <span class="badge {{accounts_due_badge_class}}">{{accounts_due_badge_text}}</span>
-        </p>
-        <p><strong>Next Confirmation Statement:</strong> {{confirmation_next_due}}
-          <span class="badge {{confirmation_due_badge_class}}">{{confirmation_due_badge_text}}</span>
-        </p>
+      <div class="strip-cell">
+        <div class="strip-label">Accounts Next Due</div>
+        <div class="strip-value">{{accounts_next_due}}</div>
+      </div>
+      <div class="strip-cell">
+        <div class="strip-label">Confirmation Due</div>
+        <div class="strip-value">{{confirmation_next_due}}</div>
+      </div>
+      <div class="strip-cell">
+        <div class="strip-label">Status</div>
+        <div class="strip-value">{{company_status}}</div>
+      </div>
+      <div class="strip-cell">
+        <div class="strip-label">Filing Authorization</div>
+        <div class="strip-value">{{company_can_file}}</div>
       </div>
     </div>
 
-    <!-- OFFICERS -->
-    <div class="section-title">Officers ({{officers_summary}})</div>
-    <div class="card" style="padding:0;">
+    <div class="action-panel">
+      <h4>Action Required & Scope Notes</h4>
+      <ul class="action-list">
+        <li>Cross-verify statutory submission vectors against interior practice timeline task blocks.</li>
+        <li>Review verified Person with Significant Control (PSC) declarations below for ongoing identity compliance audits.</li>
+      </ul>
+    </div>
+
+    <div class="panel-grid-2">
+      
+      <div>
+        <div class="section-title">Company Profile Details</div>
+        <div class="field-list">
+          <div class="field"><span class="field-label">Company Name</span><div class="field-dot-leader"></div><span class="field-value">{{company_name}}</span></div>
+          <div class="field"><span class="field-label">Company Number</span><div class="field-dot-leader"></div><span class="field-value">{{company_number}}</span></div>
+          <div class="field"><span class="field-label">Status Flag</span><div class="field-dot-leader"></div><span class="field-value"><span class="badge {{company_status_badge_class}}">{{company_status}}</span></span></div>
+          <div class="field"><span class="field-label">Company Legal Type</span><div class="field-dot-leader"></div><span class="field-value">{{company_type}}</span></div>
+          <div class="field"><span class="field-label">Incorporation Date</span><div class="field-dot-leader"></div><span class="field-value">{{company_incorporated}}</span></div>
+          <div class="field"><span class="field-label">Legal Jurisdiction</span><div class="field-dot-leader"></div><span class="field-value">{{company_jurisdiction}}</span></div>
+          <div class="field crm-only"><span class="field-label">CRM Client Segment</span><div class="field-dot-leader"></div><span class="field-value">{{client_type}}</span></div>
+          <div class="field crm-only"><span class="field-label">Account Assignment</span><div class="field-dot-leader"></div><span class="field-value">{{portfolio_name}}</span></div>
+          <div class="field crm-only"><span class="field-label">Internal Core Rating</span><div class="field-dot-leader"></div><span class="field-value">{{internal_rating}}</span></div>
+        </div>
+
+        <div class="section-title">Statutory Compliance Status</div>
+        <div class="field-list">
+          <div class="field"><span class="field-label">AML Risk Metric</span><div class="field-dot-leader"></div><span class="field-value"><span class="status-chip low">{{aml_risk_rating}}</span></span></div>
+          <div class="field crm-only"><span class="field-label">Next Scheduled AML Audit</span><div class="field-dot-leader"></div><span class="field-value">{{aml_review_date}}</span></div>
+          <div class="field crm-only"><span class="field-label">KYC/ID Verification Status</span><div class="field-dot-leader"></div><span class="field-value">{{id_verified}}</span></div>
+          <div class="field crm-only"><span class="field-label">Source of Funds Confirmed</span><div class="field-dot-leader"></div><span class="field-value">{{source_of_funds_checked}}</span></div>
+          <div class="field crm-only"><span class="field-label">Practice Intake Onboarding</span><div class="field-dot-leader"></div><span class="field-value"><span class="status-chip complete">{{take_on_completed}}</span></span></div>
+          <div class="field"><span class="field-label">Financial Accounts Due</span><div class="field-dot-leader"></div><span class="field-value">{{accounts_next_due}} <span class="badge {{accounts_due_badge_class}}">{{accounts_due_badge_text}}</span></span></div>
+          <div class="field"><span class="field-label">Confirmation Statement Due</span><div class="field-dot-leader"></div><span class="field-value">{{confirmation_next_due}} <span class="badge {{confirmation_due_badge_class}}">{{confirmation_due_badge_text}}</span></span></div>
+        </div>
+
+        <div class="section-title crm-only">Primary Account Contact</div>
+        <div class="field-list crm-only">
+          <div class="field"><span class="field-label">Contact Name</span><div class="field-dot-leader"></div><span class="field-value">{{primary_contact_name}}</span></div>
+          <div class="field"><span class="field-label">Direct Email</span><div class="field-dot-leader"></div><span class="field-value">{{primary_contact_email}}</span></div>
+          <div class="field"><span class="field-label">Direct Telephone</span><div class="field-dot-leader"></div><span class="field-value">{{primary_contact_phone}}</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Operations & Tax Declarations</div>
+        <div class="field-list">
+          <div class="field"><span class="field-label">SIC Activity Codes</span><div class="field-dot-leader"></div><span class="field-value">{{company_sic_codes}}</span></div>
+          <div class="field"><span class="field-label">Gateway Access Active</span><div class="field-dot-leader"></div><span class="field-value">{{company_can_file}}</span></div>
+          <div class="field"><span class="field-label">Mortgage/Charges Flag</span><div class="field-dot-leader"></div><span class="field-value">{{company_has_charges}}</span></div>
+          <div class="field"><span class="field-label">Insolvency Record Found</span><div class="field-dot-leader"></div><span class="field-value">{{company_has_insolvency_history}}</span></div>
+          <div class="field crm-only"><span class="field-label">HMRC Corporation Tax UTR</span><div class="field-dot-leader"></div><span class="field-value">{{utr}}</span></div>
+          <div class="field crm-only"><span class="field-label">HMRC VAT Registration</span><div class="field-dot-leader"></div><span class="field-value">{{vat_number}}</span></div>
+          <div class="field crm-only"><span class="field-label">HMRC PAYE Reference</span><div class="field-dot-leader"></div><span class="field-value">{{paye_reference}}</span></div>
+        </div>
+
+        <div class="section-title">Registered Legal Office Address</div>
+        <div class="notes-panel" style="border-style: solid; background: #FFFFFF; margin-bottom: 0;">
+          <div class="notes-content" style="color: var(--text); font-weight: 600;">
+            {{company_registered_office}}
+          </div>
+        </div>
+
+        <div class="section-title crm-only">Practice Advisory & Strategy Parameters</div>
+        <div class="notes-panel crm-only">
+          <div class="notes-content">{{advisory_text}}</div>
+        </div>
+
+        <div class="section-title">Companies House Registered Charges Summary</div>
+        <div class="notes-panel" style="border-style: solid; background: #FFFFFF;">
+          <div class="notes-content">{{charges_text}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="conditional-section crm-only">
+      <div class="section-title">Active Service & Project Milestone Management</div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">Service Stream</th>
+              <th style="width: 45%;">Task Workflow Description</th>
+              <th style="width: 15%;">Due Target Date</th>
+              <th style="width: 10%;">Status</th>
+              <th style="width: 10%;">Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{task_rows}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-title">Current Appointed Officers ({{officers_summary}})</div>
+    <div class="table-container">
       <table>
         <thead>
           <tr>
-            <th>Name</th><th>Role</th><th>Appointed</th><th>Resigned</th>
-            <th>Nationality</th><th>Country of Residence</th>
+            <th style="width: 25%;">Officer Name</th>
+            <th style="width: 15%;">Corporate Role</th>
+            <th style="width: 15%;">Appointed On</th>
+            <th style="width: 15%;">Resigned On</th>
+            <th style="width: 15%;">Declared Nationality</th>
+            <th style="width: 15%;">Country of Residence</th>
           </tr>
         </thead>
         <tbody>
@@ -228,31 +581,16 @@
       </table>
     </div>
 
-    <!-- FILINGS -->
-    <div class="section-title">Recent Filings (Last {{filings_count}})</div>
-    <div class="card" style="padding:0;">
+    <div class="section-title">Persons with Significant Control Registry ({{psc_count}})</div>
+    <div class="table-container">
       <table>
         <thead>
-          <tr><th>Date</th><th>Description</th><th>Category</th><th>Type</th></tr>
-        </thead>
-        <tbody>
-          {{filings_rows}}
-        </tbody>
-      </table>
-    </div>
-
-    <!-- CHARGES -->
-    <div class="section-title">Charges</div>
-    <div class="card">
-      <p>{{charges_text}}</p>
-    </div>
-
-    <!-- PSC -->
-    <div class="section-title">Persons with Significant Control ({{psc_count}})</div>
-    <div class="card" style="padding:0;">
-      <table>
-        <thead>
-          <tr><th>Name</th><th>Kind</th><th>Notified</th><th>Nature of Control</th></tr>
+          <tr>
+            <th style="width: 30%;">Declared PSC Name</th>
+            <th style="width: 25%;">Control Kind</th>
+            <th style="width: 15%;">Notified Date</th>
+            <th style="width: 30%;">Declared Nature and Scale of Control</th>
+          </tr>
         </thead>
         <tbody>
           {{psc_rows}}
@@ -260,24 +598,48 @@
       </table>
     </div>
 
-    <!-- RAW JSON -->
-    <div class="section-title">Raw Data (JSON)</div>
-    <details class="card">
-      <summary style="cursor:pointer;color:var(--accent);font-weight:700">
-        Click to view complete raw data
+    <div class="section-title">Historical & Recent Filing Timelines (Last {{filings_count}})</div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 15%;">Filing Date</th>
+            <th style="width: 55%;">Filing Description Parameter</th>
+            <th style="width: 15%;">Category Class</th>
+            <th style="width: 15%;">Form Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{filings_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="conditional-section crm-only">
+      <div class="section-title">Commercial Engagement Rates Summary</div>
+      <div class="field-list" style="max-width: 500px; margin-top: 4px;">
+        <div class="field"><span class="field-label">Annualized Retainer Value</span><div class="field-dot-leader"></div><span class="field-value">£{{annual_fee}}</span></div>
+        <div class="field"><span class="field-label">Monthly Recurring Retainer</span><div class="field-dot-leader"></div><span class="field-value">£{{monthly_recurring}}</span></div>
+        <div class="field"><span class="field-label">Agreed Billing Model Structure</span><div class="field-dot-leader"></div><span class="field-value">{{billing_model}}</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">Raw Data Registry Structural (JSON Payload Appendix)</div>
+    <details style="margin-top: 6px; border: 1px solid var(--border); border-radius: 6px; padding: 12px; background: #FFFFFF;">
+      <summary style="cursor:pointer; color: var(--accent); font-weight:700; font-size: 12px; outline: none;">
+        Click to review full underlying API payload parameters
       </summary>
       <pre>{{raw_json}}</pre>
     </details>
 
-  </div>
+    <footer class="footer">
+      <strong>{{practice_name}}</strong> &bull; {{practice_address}}<br />
+      <span>Contact Desk: {{practice_email}} &nbsp; | &nbsp; Hotline: {{practice_phone}}</span><br />
+      <span style="font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; font-size: 9px; display: inline-block; margin-top: 6px;">
+        CONFIDENTIAL: INTERNAL PRACTICE COMPLIANCE DOCUMENT. Generated on {{generated_date}}. © {{year}} {{practice_name}}.
+      </span>
+    </footer>
 
-  <!-- FOOTER -->
-  <div class="footer">
-    {{practice_name}}<br />
-    {{practice_address}}<br />
-    Email: {{practice_email}} &nbsp; | &nbsp; Phone: {{practice_phone}}<br />
-    <em>Prepared on {{generated_date}}. © {{year}} {{practice_name}}.</em>
   </div>
-
 </body>
 </html>

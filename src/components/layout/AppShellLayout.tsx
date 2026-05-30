@@ -20,6 +20,7 @@ const navItems = [
   
   // Section 3: Resources & Settings
   { label: 'Reports', icon: '📑', path: '/reports', agentOnly: true },
+  { label: 'Accounts Production', icon: '📒', path: '/accounts-production', agentOnly: true },
   { label: 'Letter Templates', icon: '📄', path: '/documents/templates', agentOnly: true },
   { label: 'Knowledge Centre', icon: '📘', path: '/knowledge' },
   { label: 'Settings', icon: '⚙️', path: '/settings' },

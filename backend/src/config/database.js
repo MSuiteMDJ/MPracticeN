@@ -29,6 +29,8 @@ const STORAGE_KEYS = [
   'services',
   'companiesHouseCredentials',
   'clientRelationships',
+  'accountsSets',
+  'clientServices',
 ];
 
 const dataRoot = ensureDirectory(getDataRoot());

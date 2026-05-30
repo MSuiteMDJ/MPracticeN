@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Appointed</th>
+              <th>Resigned</th>
+              <th>Linked Ref</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {{director_rows}}
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+    <!-- FEES -->
+
+    <section>
+
+      <div class="section-title">
+        Fees & Billing Summary
+      </div>
+
+      <div class="field-list" style="max-width: 520px;">
+
+        <div class="field">
+          <span class="field-label">Annual Fees</span>
+          <div class="dot"></div>
+          <span class="field-value">£{{annual_fee}}</span>
+        </div>
+
+        <div class="field">
+          <span class="field-label">Monthly Recurring</span>
+          <div class="dot"></div>
+          <span class="field-value">£{{monthly_recurring}}</span>
+        </div>
+
+        <div class="field">
+          <span class="field-label">Billing Model</span>
+          <div class="dot"></div>
+          <span class="field-value">{{billing_model}}</span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+      <strong>{{practice_name}}</strong>
+      &bull;
+      {{practice_address}}
+      <br />
+
+      CONFIDENTIAL: Internal Professional Reference Only.
+      © {{year}} {{practice_name}}
+    </footer>
+
+  </main>
+
+</body>
+</html>

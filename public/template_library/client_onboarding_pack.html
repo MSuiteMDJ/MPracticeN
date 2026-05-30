@@ -1,268 +1,252 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Client Onboarding Pack - {{client.name}}</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <title>Onboarding Pack – {{client_name}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --theme-colour: #6A1B9A; /* PurpleD brand */
-      --theme-light: #F3E5F5;
-      --theme-light-2: #E1BEE7;
-      --accent-dark: #4A0E6B;
-      --border: #d8cce2;
-      --text: #1f1f1f;
-      --muted: #6b7280;
-      --card-bg: #ffffff;
+      --primary: #6A1B9A;
+      --primary-dark: #4A148C;
+      --primary-soft: #F3E5F5;
+      --border: #E0E0E0;
+      --text-main: #1A1A1A;
+      --text-muted: #666666;
+      --bg-app: #F9FAFB;
+      --sidebar-w: 260px;
     }
 
-    html, body {
+    .black-theme {
+      --primary: #2C2C2C;
+      --primary-dark: #000000;
+      --primary-soft: #F2F2F2;
+    }
+
+    * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+
+    body {
       margin: 0;
-      padding: 0;
-      font-family: 'Roboto', Arial, sans-serif;
-      color: var(--text);
-      background: #faf7ff;
-      line-height: 1.6;
-    }
-
-    .header-full {
-      width: 100%;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      background: var(--bg-app);
       display: flex;
+    }
+
+    /* --- SIDEBAR --- */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: #ffffff;
+      height: 100vh;
+      position: fixed;
+      border-right: 1px solid var(--border);
+      padding: 30px 20px;
+      z-index: 100;
+    }
+
+    .btn-toggle {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .btn-toggle.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* --- CONTENT --- */
+    .content-wrapper {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 40px 60px;
+      max-width: 1100px;
+    }
+
+    .welcome-hero {
+      background: var(--primary);
+      color: white;
+      padding: 40px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 20px;
-      padding: 25px 40px 5px 40px;
-    }
-
-    .header-full img.logo {
-      width: 95px;
-      height: auto;
-    }
-
-    .header-full h1 {
-      font-size: 30px;
-      font-weight: 700;
-      margin: 0;
-      color: var(--theme-colour);
-      letter-spacing: 0.4px;
-    }
-
-    .header-line {
-      border: 0;
-      border-bottom: 3px solid var(--theme-colour);
-      margin: 5px 0 15px 0;
-    }
-
-    .container {
-      max-width: 1040px;
-      margin: 30px auto;
-      padding: 0 40px 40px 40px;
-    }
-
-    .welcome {
-      background: linear-gradient(135deg, var(--theme-light) 0%, var(--theme-light-2) 100%);
-      padding: 30px;
-      border-radius: 12px;
-      border: 1px solid #d4b4e1;
-      margin: 18px 0 28px 0;
-    }
-
-    .welcome h2 {
-      margin: 0 0 10px 0;
-      color: var(--accent-dark);
-      font-size: 30px;
-      font-weight: 700;
     }
 
     .section-title {
-      color: var(--theme-colour);
-      font-size: 22px;
-      margin-top: 34px;
-      margin-bottom: 14px;
-      border-left: 5px solid var(--theme-colour);
-      padding-left: 12px;
-      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+      margin: 40px 0 15px 0;
+      font-weight: 800;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-    }
+    .card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
+    /* Checklist Styling */
+    .step-list { list-style: none; padding: 0; }
+    .step-item {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #f5f5f5;
     }
-
-    .info-list p {
-      margin: 6px 0;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      border: 1px solid #e2d8eb;
-      padding: 10px;
-      background: #ffffff;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      background: #f5e9fc;
-      font-weight: 700;
-      color: var(--accent-dark);
-    }
-
-    .steps {
-      padding-left: 20px;
-    }
-
-    .footer {
-      margin-top: 40px;
-      border-top: 2px solid var(--theme-colour);
-      padding-top: 16px;
+    .step-number {
+      background: var(--primary-soft);
+      color: var(--primary);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
       font-size: 12px;
-      text-align: center;
-      color: #555;
+      flex-shrink: 0;
     }
 
-    .muted {
-      color: var(--muted);
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+    .deadline-badge {
+      background: #FEE2E2;
+      color: #991B1B;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
     }
 
     @media print {
-      .container { padding: 0 0 24px 0; }
-      .welcome, .card, table { page-break-inside: avoid; }
+      .sidebar { display: none; }
+      .content-wrapper { margin-left: 0; padding: 0; }
+      .welcome-hero { border-radius: 0; }
     }
   </style>
+
+  <script>
+    function toggleTheme(theme) {
+      document.body.className = theme;
+      document.getElementById('pBtn').classList.toggle('active', theme === 'purple-theme');
+      document.getElementById('bBtn').classList.toggle('active', theme === 'black-theme');
+      const logoUrl = theme === 'black-theme' ? '{{logo_black_url}}' : '{{logo_purple_url}}';
+      document.getElementById('sideLogo').src = logoUrl;
+      document.getElementById('heroLogo').src = logoUrl;
+    }
+  </script>
 </head>
 
-<body>
+<body class="purple-theme">
 
-<div class="header-full">
-  <img 
-    src="/M_Logo_PurpleD.png" 
-    class="logo" 
-    alt="M Practice Manager Logo"
-  >
-  <h1>Client Onboarding Pack</h1>
-</div>
+  <nav class="sidebar">
+    <img id="sideLogo" src="{{logo_purple_url}}" alt="Logo" style="max-width: 130px; margin-bottom: 20px;" />
+    <small style="font-weight: bold; color: var(--text-muted); font-size: 10px;">BRANDING</small>
+    <button id="pBtn" class="btn-toggle active" onclick="toggleTheme('purple-theme')">Purple (Client)</button>
+    <button id="bBtn" class="btn-toggle" onclick="toggleTheme('black-theme')">Black (Formal)</button>
+  </nav>
 
-<hr class="header-line">
-
-<div class="container">
-
-  <div class="welcome">
-    <h2>Welcome to {{practice.name}}</h2>
-    <p>Thank you for choosing us to support {{client.name}} with your accounting, tax, payroll, and compliance needs.</p>
-    <p class="muted">Prepared for {{client.contact_name}} on {{today}}</p>
-  </div>
-
-  <h2 class="section-title">Client Summary</h2>
-
-  <div class="grid">
-    <div class="card info-list">
-      <p><strong>Client Name:</strong> {{client.name}}</p>
-      <p><strong>Client Reference:</strong> {{client.reference}}</p>
-      <p><strong>Company Number:</strong> {{client.company_number}}</p>
-      <p><strong>Registered Address:</strong> {{client.registered_address}}</p>
+  <main class="content-wrapper">
+    
+    <div class="welcome-hero">
+      <div>
+        <h1 style="margin: 0; font-size: 32px;">Welcome,</h1>
+        <h2 style="margin: 5px 0 0 0; font-weight: 400; opacity: 0.9;">{{client_name}}</h2>
+      </div>
+      <img id="heroLogo" src="{{logo_purple_url}}" style="height: 60px; filter: brightness(0) invert(1);" />
     </div>
 
-    <div class="card info-list">
-      <p><strong>Client Manager:</strong> {{client.manager}}</p>
-      <p><strong>Responsible Partner:</strong> {{client.partner}}</p>
-      <p><strong>Assigned Reviewer:</strong> {{client.assigned_reviewer}}</p>
-      <p><strong>Accounting Software:</strong> {{client.software}}</p>
+    <div class="grid-2">
+      <div>
+        <div class="section-title">Onboarding Roadmap</div>
+        <div class="card">
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">1</div>
+              <div>
+                <strong>Engagement Agreement</strong>
+                <p style="margin: 5px 0; font-size: 13px; color: var(--text-muted);">Review and sign the professional engagement letter sent on {{engagement_sent_date}}.</p>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">2</div>
+              <div>
+                <strong>Identity Verification</strong>
+                <p style="margin: 5px 0; font-size: 13px; color: var(--text-muted);">Status: <span style="color: green; font-weight: 700;">Verified</span>. AML check completed for {{client_name}}.</p>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">3</div>
+              <div>
+                <strong>Authority Mandates</strong>
+                <p style="margin: 5px 0; font-size: 13px; color: var(--text-muted);">Sign the 64-8 Agent Authorisation for HMRC and Companies House WebFiling.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Urgent Priorities</div>
+        <div class="card">
+          <p style="font-size: 14px; font-weight: 700; margin-bottom: 15px;">Upcoming Compliance Deadlines:</p>
+          <div style="margin-bottom: 15px;">
+            <span class="deadline-badge">DUE 04 APR 2026</span>
+            <p style="margin: 5px 0; font-size: 13px;"><strong>VAT Return Submission</strong><br>Quarterly return for {{client_name}}.</p>
+          </div>
+          <div style="margin-bottom: 15px;">
+            <span class="deadline-badge" style="background:#FEF3C7; color:#92400E;">DUE 15 AUG 2026</span>
+            <p style="margin: 5px 0; font-size: 13px;"><strong>Confirmation Statement</strong><br>Companies House Annual Filing.</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <h2 class="section-title">Services in Scope</h2>
-
-  <div class="card" style="padding:0;">
-    <table>
-      <thead>
-        <tr>
-          <th>Service</th>
-          <th>Frequency</th>
-          <th>Fee</th>
-          <th>Next Due</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{service_rows}}
-      </tbody>
-    </table>
-  </div>
-
-  <h2 class="section-title">What Happens Next</h2>
-
-  <div class="card">
-    <ol class="steps">
-      <li>We finalise your client setup and review your current compliance position.</li>
-      <li>We confirm key filing dates, deadlines, and ongoing responsibilities.</li>
-      <li>We issue engagement letters and authority forms where required.</li>
-      <li>We start collecting the records needed for your upcoming deadlines.</li>
-    </ol>
-  </div>
-
-  <h2 class="section-title">What We Need From You</h2>
-
-  <div class="grid">
+    <div class="section-title">Required Information Checklist</div>
     <div class="card">
-      <p><strong>Records and Information</strong></p>
-      <ul class="steps">
-        <li>Access to bookkeeping or accounting records</li>
-        <li>Latest tax correspondence or reference numbers</li>
-        <li>Payroll information, if applicable</li>
-        <li>Existing HMRC or Companies House notices</li>
-      </ul>
+      <div class="grid-2" style="font-size: 13px;">
+        <ul style="padding-left: 20px;">
+          <li style="margin-bottom: 8px;">Access to accounting software (Xero/Quickbooks)</li>
+          <li style="margin-bottom: 8px;">Last 3 months of bank statements (PDF or CSV)</li>
+          <li style="margin-bottom: 8px;">Copy of Incorporation Certificate for Co. No {{company_number}}</li>
+        </ul>
+        <ul style="padding-left: 20px;">
+          <li style="margin-bottom: 8px;">Directors' ID (Passports/Drivers Licences)</li>
+          <li style="margin-bottom: 8px;">PAYE Reference and P11D data for staff</li>
+          <li style="margin-bottom: 8px;">Previous Year Accounts for period ending Feb 2025</li>
+        </ul>
+      </div>
     </div>
 
+    <div class="section-title">Your Service Team</div>
     <div class="card">
-      <p><strong>Approvals and Setup</strong></p>
-      <ul class="steps">
-        <li>Signed engagement letter & authority documents</li>
-        <li>Confirmation of statutory details and office address</li>
-        <li>Payment setup and chosen billing method</li>
-        <li>Timely review of drafts and approval requests</li>
-      </ul>
+      <div style="display: flex; gap: 40px;">
+        <div>
+          <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">Lead Partner</span><br>
+          <strong>{{practice_contact}}</strong>
+        </div>
+        <div>
+          <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">Email Support</span><br>
+          <strong>{{practice_email}}</strong>
+        </div>
+        <div>
+          <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">Office Phone</span><br>
+          <strong>{{practice_phone}}</strong>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <h2 class="section-title">Key Dates</h2>
-
-  <div class="card info-list">
-    <p><strong>Next Priority Deadline:</strong> {{deadline.type}}</p>
-    <p><strong>Due Date:</strong> {{deadline.due_date}}</p>
-    <p><strong>Preparation Notes:</strong> {{deadline.action_items}}</p>
-  </div>
-
-  <h2 class="section-title">Contact Details</h2>
-
-  <div class="card info-list">
-    <p><strong>Practice Contact:</strong> {{practice.contact}}</p>
-    <p><strong>Email:</strong> {{practice.email}}</p>
-    <p><strong>Phone:</strong> {{practice.phone}}</p>
-    <p><strong>Address:</strong> {{practice.address}}</p>
-  </div>
-
-  <div class="footer">
-    <strong>{{practice.name}}</strong><br>
-    {{practice.address}}<br>
-    Email: {{practice.email}} &nbsp; | &nbsp; Phone: {{practice.phone}}<br>
-    <em>Prepared for client onboarding. © {{year}} {{practice.name}}.</em>
-  </div>
-
-</div>
-
+    <footer style="margin-top: 50px; text-align: center; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 20px;">
+      <strong>{{practice_name}}</strong> • {{practice_address}}<br>
+      <em>This pack is for onboarding purposes only. Reference: {{client_ref}}</em>
+    </footer>
+  </main>
 </body>
 </html>
