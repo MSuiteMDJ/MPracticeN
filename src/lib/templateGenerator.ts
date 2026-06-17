@@ -88,7 +88,7 @@ async function loadTemplate(templateFile: string): Promise<string> {
     }
     const html = await response.text();
 
-    // Templates now have built-in headers/footers with M Practice branding
+    // Templates now have built-in headers/footers with Arcanus Practice branding
     // Just return the template as-is
     return html;
   } catch (error) {
@@ -149,8 +149,8 @@ export async function generateDocument(templateFile: string, data: TemplateData)
     ...data,
     today,
     year: String(year),
-    logo_purple_url: absoluteAsset('/M_Logo_PurpleD.png'),
-    logo_black_url: absoluteAsset('/M_Logo_Black.png'),
+    logo_purple_url: absoluteAsset('/arcanus-logo.png'),
+    logo_black_url: absoluteAsset('/arcanus-logo.png'),
   };
 
   html = replacePlaceholders(html, fullData);

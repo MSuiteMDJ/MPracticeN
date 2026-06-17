@@ -201,7 +201,7 @@ export default function Register() {
         </p>
 
         <p className="authPowered" style={{ marginTop: '1rem' }}>
-          Powered by M Assist
+          Powered by Arcanus Assist
         </p>
       </div>
     </div>

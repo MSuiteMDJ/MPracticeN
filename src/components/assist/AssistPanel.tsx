@@ -90,7 +90,7 @@ export default function AssistPanel({
       <AssistDrawer
         open={open}
         onClose={handleCloseDrawer}
-        ariaLabel="M Assist - Chat with AI assistant for duty refund help"
+        ariaLabel="Arcanus Assist - Chat with AI assistant for duty refund help"
       >
         <AssistChat />
       </AssistDrawer>

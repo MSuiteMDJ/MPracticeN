@@ -49,7 +49,7 @@ export const AssistFab: React.FC<AssistFabProps> = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         disabled={disabled}
-        aria-label="Open M Assist"
+        aria-label="Open Arcanus Assist"
         aria-expanded={false}
         className="suite-fab"
         style={{
@@ -108,7 +108,7 @@ export const AssistFab: React.FC<AssistFabProps> = ({
 
           <img
             src={DEFAULT_LOGO}
-            alt="M Assist Lion"
+            alt="Arcanus Assist Lion"
             style={{
               width: inline ? resolvedSize - 14 : 28,
               height: inline ? resolvedSize - 14 : 28,

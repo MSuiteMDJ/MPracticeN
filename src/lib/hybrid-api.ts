@@ -189,7 +189,7 @@ export async function getDashboardStats() {
 // Hybrid API: Login
 export async function login(email: string, password: string) {
   // Check if demo login
-  if (email === 'demo@mpractice.com' && password === 'demo1234') {
+  if (email === 'demo@arcanus.com' && password === 'demo1234') {
     // Demo mode: Store demo user info
     localStorage.setItem('current_user_email', email);
     localStorage.setItem('demo_mode', 'true');
@@ -205,7 +205,7 @@ export async function login(email: string, password: string) {
       success: true,
       mode: 'demo',
       user: {
-        email: 'demo@mpractice.com',
+        email: 'demo@arcanus.com',
         first_name: 'Demo',
         last_name: 'User',
         company_name: settings.company_name || 'Demo Company',

@@ -54,7 +54,7 @@ export const ShellLayout: React.FC<{ children: React.ReactNode }> = ({ children 
             fontSize: '0.95rem',
           }}
         >
-          M PRACTICE MANAGER
+          ARCANUS PRACTICE
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 16, alignItems: 'center' }}>
           <button

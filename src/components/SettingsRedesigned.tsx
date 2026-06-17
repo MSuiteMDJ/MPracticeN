@@ -201,23 +201,23 @@ export default function SettingsRedesigned() {
       // Demo data
       setFirstName('Demo');
       setLastName('User');
-      setEmail('demo@mpractice.com');
+      setEmail('demo@arcanus.com');
       setCompanyName('Demo Company Ltd');
       setEoriNumber('GB123456789000');
       setVatNumber('GB123456789');
-      setCompanyEmail('demo@mpractice.com');
+      setCompanyEmail('demo@arcanus.com');
       setCompanyAddress('100 Parliament Street, London, SW1A 2BQ');
       setCompanyPhone('+44 20 1234 5678');
       setEmailEnabled(true);
       setEmailFromName('Demo Company Ltd');
-      setEmailFromAddress('demo@mpractice.com');
-      setEmailReplyTo('support@mpractice.com');
+      setEmailFromAddress('demo@arcanus.com');
+      setEmailReplyTo('support@arcanus.com');
       setEmailSmtpHost('smtp.example.com');
       setEmailSmtpPort('587');
-      setEmailSmtpUsername('demo@mpractice.com');
+      setEmailSmtpUsername('demo@arcanus.com');
       setEmailSmtpPasswordSet(true);
       setEmailSmtpSecure(false);
-      setEmailTestRecipient('demo@mpractice.com');
+      setEmailTestRecipient('demo@arcanus.com');
       setRoles(FALLBACK_ROLES);
       setHmrcStatus('connected');
       setGovGatewayStatus('connected');
@@ -227,7 +227,7 @@ export default function SettingsRedesigned() {
       updateSettings({
         userType: 'agent',
         companyName: 'Demo Company Ltd',
-        email: 'demo@mpractice.com',
+        email: 'demo@arcanus.com',
         phone: '+44 20 1234 5678',
         address: '100 Parliament Street, London, SW1A 2BQ',
         address_line_2: '',
@@ -742,7 +742,7 @@ export default function SettingsRedesigned() {
       setEmailTestResult('success');
       setEmailLastVerified(new Date().toISOString());
       setTimeout(() => setTestingEmail(false), 300);
-      showToast('success', `Test email queued for ${emailTestRecipient || 'demo@mpractice.com'} (demo mode)`);
+      showToast('success', `Test email queued for ${emailTestRecipient || 'demo@arcanus.com'} (demo mode)`);
       return;
     }
 

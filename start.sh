@@ -1,10 +1,10 @@
 #!/bin/bash
-# M Practice Manager - Startup Script
+# Arcanus Practice - Startup Script
 # Starts both backend and frontend servers
 
 echo "╔════════════════════════════════════════════════════════════╗"
 echo "║                                                            ║"
-echo "║          M Practice Manager - Starting Application          ║"
+echo "║          Arcanus Practice - Starting Application          ║"
 echo "║                                                            ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""

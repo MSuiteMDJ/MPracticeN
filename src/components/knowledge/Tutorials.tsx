@@ -215,7 +215,7 @@ export default function Tutorials() {
             Need help with a specific step?
           </h3>
           <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-            M Assist can provide personalized guidance for your specific claim scenario and answer
+            Arcanus Assist can provide personalized guidance for your specific claim scenario and answer
             questions in real-time.
           </p>
           <button
@@ -229,7 +229,7 @@ export default function Tutorials() {
               cursor: 'pointer',
             }}
           >
-            Ask M Assist for Help
+            Ask Arcanus Assist for Help
           </button>
         </div>
       </div>

@@ -22,7 +22,7 @@ interface UpdatePortfolioInput {
 }
 
 const PORTFOLIO_STORAGE_KEY = 'm_practice_portfolios_v1';
-const PORTFOLIO_DATA_UPDATED_EVENT = 'm-practice-portfolio-data-updated';
+const PORTFOLIO_DATA_UPDATED_EVENT = 'arcanus-portfolio-data-updated';
 
 function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-const M_ASSIST_LOGO = `${import.meta.env.BASE_URL}M_Logo_PurpleD.png`;
+const M_ASSIST_LOGO = `${import.meta.env.BASE_URL}arcanus-logo.png`;
 
 interface LoadingScreenProps {
   onComplete?: () => void;
@@ -57,8 +57,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const status = [
     { title: 'Starting Servers', detail: 'Initializing backend and frontend services…' },
     { title: 'Loading Database', detail: 'Connecting to PostgreSQL database…' },
-    { title: 'Checking Integrations', detail: 'Verifying Companies House & M Assist services…' },
-    { title: 'Ready', detail: 'All systems operational. Welcome to M Practice Manager!' },
+    { title: 'Checking Integrations', detail: 'Verifying Companies House & Arcanus Assist services…' },
+    { title: 'Ready', detail: 'All systems operational. Welcome to Arcanus Practice!' },
   ][phase];
 
   return (
@@ -116,10 +116,10 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </div>
 
           {/* LOGO */}
-          <img src={M_ASSIST_LOGO} alt="M Assist Logo" className="massist-logo" />
+          <img src={M_ASSIST_LOGO} alt="Arcanus Assist Logo" className="massist-logo" />
         </div>
 
-        <h1 className="massist-title">M Practice Manager</h1>
+        <h1 className="massist-title">Arcanus Practice</h1>
 
         <div className="massist-status">
           <div className="massist-status-line">{status.title}</div>

@@ -34,7 +34,7 @@ export default function ForgotPassword() {
 
           <h1 className="authTitle">Email Sent!</h1>
           <p className="authSubtitle">Check your inbox for the reset link</p>
-          <p className="authPowered">Powered by M Assist</p>
+          <p className="authPowered">Powered by Arcanus Assist</p>
 
           <div
             style={{
@@ -73,7 +73,7 @@ export default function ForgotPassword() {
 
         <h1 className="authTitle">Reset Password</h1>
         <p className="authSubtitle">Enter your email to receive a reset link</p>
-        <p className="authPowered">Powered by M Assist</p>
+        <p className="authPowered">Powered by Arcanus Assist</p>
 
         {error && (
           <div

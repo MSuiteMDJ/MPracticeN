@@ -119,7 +119,7 @@ export interface AddClientServiceInput {
 
 const TEMPLATE_STORAGE_KEY = 'm_practice_service_templates_v1';
 const CLIENT_SERVICE_STORAGE_KEY = 'm_practice_client_services_v1';
-const SERVICE_DATA_UPDATED_EVENT = 'm-practice-service-data-updated';
+const SERVICE_DATA_UPDATED_EVENT = 'arcanus-service-data-updated';
 const SERVICE_API_BASE =
   (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_CDS_API_URL) ||
   'http://localhost:3003';

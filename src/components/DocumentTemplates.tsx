@@ -344,7 +344,7 @@ export default function DocumentTemplates() {
         <ul style={{ margin: 0, paddingLeft: '1.5rem', color: 'var(--text-muted)' }}>
           <li>Letter templates automatically fill with client data when generated from client pages</li>
           <li>Preview shows sample data to verify template formatting</li>
-          <li>All letter templates include M Practice branding and professional formatting</li>
+          <li>All letter templates include Arcanus Practice branding and professional formatting</li>
           <li>Templates are stored in <code>template_library/</code></li>
         </ul>
       </div>

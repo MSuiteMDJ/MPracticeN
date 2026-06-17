@@ -45,7 +45,7 @@ function renderSwaggerHtml() {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>M Practice API Docs</title>
+    <title>Arcanus Practice API Docs</title>
     <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
     <style>
       body { margin: 0; background: #0b0f19; }

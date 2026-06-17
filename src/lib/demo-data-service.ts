@@ -400,9 +400,9 @@ export function generateDemoClaims(): Partial<C285Claim>[] {
       contact_email: trader.contact_email,
       contact_phone: trader.contact_phone,
 
-      // Agent details (M Practice Manager)
+      // Agent details (Arcanus Practice)
       agent_eori: 'GB999888777000',
-      agent_name: 'M Practice Manager Ltd',
+      agent_name: 'Arcanus Practice Ltd',
 
       // Claim details
       reason: reasonData.code as ClaimReason,
@@ -494,21 +494,21 @@ export function generateDemoAccountCompliance(): AccountCompliance {
   return {
     declarantStatus: 'pass',
     declarantDetails: {
-      name: 'M Practice Manager Ltd',
+      name: 'Arcanus Practice Ltd',
       eori: 'GB999888777000',
       verified: true,
       issues: [],
     },
     traderProfileStatus: 'pass',
     traderDetails: {
-      businessName: 'M Practice Manager Ltd',
+      businessName: 'Arcanus Practice Ltd',
       registrationNumber: 'GB12345678',
       verified: true,
       issues: [],
     },
     bankStatus: 'pass',
     bankDetails: {
-      accountName: 'M Practice Manager Ltd',
+      accountName: 'Arcanus Practice Ltd',
       accountNumber: '98765432',
       sortCode: '20-00-00',
       verified: true,
@@ -619,11 +619,11 @@ export function generateDemoComplianceDetails(claimRef: string) {
     },
     declarantMatch: {
       status: declarantMatchStatus,
-      expected: 'M Practice Manager Ltd (GB999888777000)',
+      expected: 'Arcanus Practice Ltd (GB999888777000)',
       actual:
         declarantMatchStatus === 'pass'
-          ? 'M Practice Manager Ltd (GB999888777000)'
-          : 'M Practice Manager (GB999888777000)',
+          ? 'Arcanus Practice Ltd (GB999888777000)'
+          : 'Arcanus Practice (GB999888777000)',
       issues:
         declarantMatchStatus !== 'pass' ? ['Declarant name does not match account identity'] : [],
       suggestions:
@@ -633,11 +633,11 @@ export function generateDemoComplianceDetails(claimRef: string) {
     },
     bankMatch: {
       status: bankMatchStatus,
-      expected: 'M Practice Manager Ltd (98765432)',
+      expected: 'Arcanus Practice Ltd (98765432)',
       actual:
         bankMatchStatus === 'pass'
-          ? 'M Practice Manager Ltd (98765432)'
-          : 'M Practice Manager Ltd (98765432)',
+          ? 'Arcanus Practice Ltd (98765432)'
+          : 'Arcanus Practice Ltd (98765432)',
       issues: bankMatchStatus !== 'pass' ? ['Bank account does not belong to claim owner'] : [],
       suggestions:
         bankMatchStatus !== 'pass' ? ['Verify bank account ownership', 'Update bank details'] : [],

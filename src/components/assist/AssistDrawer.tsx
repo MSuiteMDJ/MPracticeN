@@ -14,7 +14,7 @@ export const AssistDrawer: React.FC<AssistDrawerProps> = ({
   open,
   onClose,
   children,
-  ariaLabel = 'M Assist Drawer',
+  ariaLabel = 'Arcanus Assist Drawer',
 }) => {
   const panelRef = useRef<HTMLDivElement | null>(null);
 
@@ -102,7 +102,7 @@ export const AssistDrawer: React.FC<AssistDrawerProps> = ({
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <img
               src={DEFAULT_LOGO}
-              alt="M Assist Lion"
+              alt="Arcanus Assist Lion"
               style={{ width: 22, height: 22, filter: 'none' }}
             />
             <span
@@ -113,12 +113,12 @@ export const AssistDrawer: React.FC<AssistDrawerProps> = ({
                 letterSpacing: '.3px',
               }}
             >
-              M Assist
+              Arcanus Assist
             </span>
           </div>
           <button
             onClick={onClose}
-            aria-label="Close M Assist"
+            aria-label="Close Arcanus Assist"
             className="suite-drawer-close"
             style={{
               background: 'transparent',

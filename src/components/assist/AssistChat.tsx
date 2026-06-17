@@ -131,8 +131,8 @@ export const AssistChat: React.FC = () => {
       console.error(err);
       setBackendOnline(false);
       const error =
-        err instanceof Error ? err : new Error('Could not reach the M Assist backend.');
-      setError(error.message ?? 'Could not reach the M Assist backend.');
+        err instanceof Error ? err : new Error('Could not reach the Arcanus Assist backend.');
+      setError(error.message ?? 'Could not reach the Arcanus Assist backend.');
       setMessages((prev) => [
         ...prev,
         {
@@ -168,7 +168,7 @@ export const AssistChat: React.FC = () => {
             textAlign: 'center',
           }}
         >
-          M Assist can't reach the backend. Check your API server.
+          Arcanus Assist can't reach the backend. Check your API server.
         </div>
       )}
 
@@ -248,7 +248,7 @@ export const AssistChat: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={onKeyDown}
-          placeholder="Ask M Assist… (Shift+Enter for newline)"
+          placeholder="Ask Arcanus Assist… (Shift+Enter for newline)"
           className="suite-chat-input"
           style={{
             flex: 1,

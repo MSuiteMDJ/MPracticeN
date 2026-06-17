@@ -1,7 +1,7 @@
 {
-  "name": "m-practice-next-backend",
+  "name": "arcanus-practice-backend",
   "version": "1.0.0",
-  "description": "M Practice Manager (Next) backend service",
+  "description": "Arcanus Practice backend service",
   "type": "module",
   "scripts": {
     "dev": "nodemon --config nodemon.json src/server.js",

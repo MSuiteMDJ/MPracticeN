@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://m-practice.local/schema/m-practice-v1.models.schema.json",
-  "title": "M Practice Core Models (v1)",
+  "title": "Arcanus Practice Core Models (v1)",
   "description": "Current TypeScript model contract for contacts, service templates, client service engagements, onboarding documents, Companies House response, and derived client profile.",
   "type": "object",
   "additionalProperties": false,

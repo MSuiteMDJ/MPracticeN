@@ -5,7 +5,7 @@ const ALGORITHM = 'aes-256-gcm';
 const IV_LENGTH = 12;
 
 function getEncryptionSecret() {
-  return process.env.COMPANIES_HOUSE_ENCRYPTION_KEY || process.env.JWT_SECRET || 'm-practice-dev-secret';
+  return process.env.COMPANIES_HOUSE_ENCRYPTION_KEY || process.env.JWT_SECRET || 'arcanus-practice-dev-secret';
 }
 
 function getCipherKey() {

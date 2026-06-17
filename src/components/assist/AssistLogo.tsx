@@ -37,7 +37,7 @@ export const AssistLogo: React.FC<AssistLogoProps> = ({
       }}
       onClick={onClick}
       role="img"
-      aria-label="M Assist Logo"
+      aria-label="Arcanus Assist Logo"
     >
       <div
         className="suite-logo-circle"

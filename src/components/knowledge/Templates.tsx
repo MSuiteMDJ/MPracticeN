@@ -372,11 +372,11 @@ export default function Templates() {
     <div className="dashboard">
       <KnowledgeHero
         title="Templates & Forms"
-        description="Download pre-filled packs, client documents, and HMRC-ready forms in one place. Use Knowledge Centre filters or M Assist to jump straight to the templates you need."
+        description="Download pre-filled packs, client documents, and HMRC-ready forms in one place. Use Knowledge Centre filters or Arcanus Assist to jump straight to the templates you need."
         tips={[
           'Preview before downloading to confirm layout',
           'Use agent templates for onboarding clients quickly',
-          'Ask M Assist to auto-fill claim data into templates',
+          'Ask Arcanus Assist to auto-fill claim data into templates',
         ]}
         rightContent={
           <div>
@@ -445,7 +445,7 @@ export default function Templates() {
         >
           <h3 style={{ fontWeight: 600 }}>Need help filling out a template?</h3>
           <p style={{ color: 'var(--text-muted)' }}>
-            M Assist can auto-fill templates using your claim data.
+            Arcanus Assist can auto-fill templates using your claim data.
           </p>
 
           <button
@@ -457,7 +457,7 @@ export default function Templates() {
               cursor: 'pointer',
             }}
           >
-            Ask M Assist to Help
+            Ask Arcanus Assist to Help
           </button>
         </div>
       </div>
