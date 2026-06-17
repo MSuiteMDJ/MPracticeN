@@ -32,3 +32,7 @@ dist-ssr
 .netlify
 
 /generated/prisma
+
+# Arcanus local data + desktop build output
+/data
+/release

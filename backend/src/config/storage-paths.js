@@ -6,12 +6,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const backendRoot = path.resolve(__dirname, '..', '..');
 
-function isWithinBackendRoot(candidatePath) {
-  const resolvedRoot = path.resolve(backendRoot);
-  const resolvedCandidate = path.resolve(candidatePath);
-  const relative = path.relative(resolvedRoot, resolvedCandidate);
-  return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
-}
+// Project root is the folder that contains both the frontend and the `backend`
+// directory. All local data lives in a single `data` folder at this root so the
+// app is fully portable ("same place as root").
+const projectRoot = path.resolve(backendRoot, '..');
 
 function normalize(value) {
   if (typeof value !== 'string') return null;
@@ -23,28 +21,33 @@ export function getBackendRoot() {
   return backendRoot;
 }
 
-export function resolveBackendPath(value, fallbackRelativePath) {
-  const fallback = path.resolve(backendRoot, fallbackRelativePath);
+export function getProjectRoot() {
+  return projectRoot;
+}
+
+// Resolve a configurable path. Absolute values are honoured as-is (used by the
+// packaged Electron app, which points data at a folder next to the executable).
+// Relative values resolve against the project root.
+export function resolveProjectPath(value, fallbackRelativePath) {
   const configured = normalize(value);
   if (!configured) {
-    return fallback;
+    return path.resolve(projectRoot, fallbackRelativePath);
   }
-  const resolved = path.isAbsolute(configured)
+  return path.isAbsolute(configured)
     ? path.normalize(configured)
-    : path.resolve(backendRoot, configured);
-  return isWithinBackendRoot(resolved) ? resolved : fallback;
+    : path.resolve(projectRoot, configured);
 }
 
 export function getDataRoot() {
-  return resolveBackendPath(process.env.DATA_DIR, 'data');
+  return resolveProjectPath(process.env.DATA_DIR, 'data');
 }
 
 export function getUploadsRoot() {
-  return resolveBackendPath(process.env.UPLOAD_DIR, 'uploads');
+  return resolveProjectPath(process.env.UPLOAD_DIR, path.join('data', 'uploads'));
 }
 
 export function getDefaultDatabasePath() {
-  return resolveBackendPath(process.env.DATABASE_PATH, path.join('data', 'spv_duty.db'));
+  return resolveProjectPath(process.env.DATABASE_PATH, path.join('data', 'arcanus.db'));
 }
 
 export function ensureDirectory(directoryPath) {
