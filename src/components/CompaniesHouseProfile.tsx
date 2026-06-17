@@ -281,7 +281,7 @@ export default function CompaniesHouseProfile() {
       psc_count: String(profileData.psc.total),
       psc_rows: pscRows,
       raw_json: escapeHtml(JSON.stringify(profileData, null, 2)),
-      settings_business_name: settings.companyName || settings.declarantOrganisationName || 'M Practice Manager',
+      settings_business_name: settings.companyName || settings.declarantOrganisationName || 'Arcanus Practice',
       settings_address_line1: practiceAddressParts.line1 || '—',
       settings_address_line2: settingsAddressLine2,
       settings_city: practiceAddressParts.city || '—',

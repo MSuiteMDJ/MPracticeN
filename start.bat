@@ -1,10 +1,10 @@
 @echo off
-REM M Practice Manager - Startup Script (Windows)
+REM Arcanus Practice - Startup Script (Windows)
 REM Starts both backend and frontend servers
 
 echo ================================================================
 echo.
-echo          M Practice Manager - Starting Application
+echo          Arcanus Practice - Starting Application
 echo.
 echo ================================================================
 echo.

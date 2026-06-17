@@ -24,7 +24,7 @@ export async function initDemoDatabase() {
 export function isDemoMode(): boolean {
   const savedEmail = localStorage.getItem('saved_email');
   const currentUser = localStorage.getItem('current_user_email');
-  return savedEmail === 'demo@mpractice.com' || currentUser === 'demo@mpractice.com';
+  return savedEmail === 'demo@arcanus.com' || currentUser === 'demo@arcanus.com';
 }
 
 // Demo API: Get declarations

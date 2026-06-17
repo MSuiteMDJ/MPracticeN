@@ -7,7 +7,7 @@ export default function Login() {
   const { login } = useAuth();
   
   // Load saved credentials or use demo as default
-  const savedEmail = localStorage.getItem('saved_email') || 'demo@mpractice.com';
+  const savedEmail = localStorage.getItem('saved_email') || 'demo@arcanus.com';
   const savedPassword = localStorage.getItem('saved_password') || 'demo1234';
   const savedRememberMe = localStorage.getItem('remember_me') === 'true';
   
@@ -26,7 +26,7 @@ export default function Login() {
       await login(username, password);
       
       // Mark mode for hybrid API
-      if (username === 'demo@mpractice.com') {
+      if (username === 'demo@arcanus.com') {
         localStorage.setItem('current_user_email', username);
         localStorage.setItem('demo_mode', 'true');
       } else {
@@ -62,7 +62,7 @@ export default function Login() {
           <br />
           operations and compliance
         </p>
-        <p className="authPowered">Powered by M Assist</p>
+        <p className="authPowered">Powered by Arcanus Assist</p>
         <form onSubmit={onSubmit}>
           <input
             className="authInput"
@@ -117,7 +117,7 @@ export default function Login() {
             Sign up
           </Link>
         </p>
-        <p className="authFooter">Questions? Reach out to M Assist anytime.</p>
+        <p className="authFooter">Questions? Reach out to Arcanus Assist anytime.</p>
       </div>
     </div>
   );

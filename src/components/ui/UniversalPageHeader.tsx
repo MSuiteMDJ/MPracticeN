@@ -15,12 +15,12 @@ const THEME_STYLES = {
   purple: {
     accent: '#6A1B9A',
     ring: 'rgba(106, 27, 154, 0.12)',
-    logo: '/M_Logo_PurpleD.png',
+    logo: '/arcanus-logo.png',
   },
   black: {
     accent: '#1F2937',
     ring: 'rgba(15, 23, 42, 0.12)',
-    logo: '/M_Logo_Black.png',
+    logo: '/arcanus-logo.png',
   },
 } as const;
 

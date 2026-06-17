@@ -1,4 +1,4 @@
--- M Practice Core Data Schema (v1 draft, PostgreSQL)
+-- Arcanus Practice Core Data Schema (v1 draft, PostgreSQL)
 -- Generated from current TypeScript domain models.
 -- Target: production-grade relational store replacing localStorage maps.
 

@@ -2,9 +2,9 @@ export function buildOpenApiSpec(serverUrl = 'http://localhost:3003') {
   return {
     openapi: '3.0.3',
     info: {
-      title: 'M Practice Manager API',
+      title: 'Arcanus Practice API',
       version: '1.0.0',
-      description: 'Backend API for M Practice Manager',
+      description: 'Backend API for Arcanus Practice',
     },
     servers: [{ url: serverUrl }],
     components: {
@@ -20,7 +20,7 @@ export function buildOpenApiSpec(serverUrl = 'http://localhost:3003') {
           type: 'object',
           required: ['email', 'password'],
           properties: {
-            email: { type: 'string', format: 'email', example: 'demo@mpractice.com' },
+            email: { type: 'string', format: 'email', example: 'demo@arcanus.com' },
             password: { type: 'string', example: 'demo1234' },
           },
         },

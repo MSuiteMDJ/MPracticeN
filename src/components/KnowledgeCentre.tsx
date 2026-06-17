@@ -371,7 +371,7 @@ export default function KnowledgeCentre() {
                 cursor: 'pointer',
               }}
             >
-              Ask M Assist
+              Ask Arcanus Assist
             </button>
             <button
               style={{

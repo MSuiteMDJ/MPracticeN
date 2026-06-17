@@ -1,4 +1,4 @@
-# M Practice Schema Artifacts
+# Arcanus Practice Schema Artifacts
 
 This folder contains two schema deliverables generated from the current codebase model layer:
 

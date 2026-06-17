@@ -24,14 +24,14 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // Demo user account (matches hybrid API)
 export const DEMO_USER: User = {
   user_id: 'demo-user-001',
-  username: 'demo@mpractice.com',
+  username: 'demo@arcanus.com',
   password: 'demo1234',
   user_type: 'AGENT',
   profile: {
     declarant_name: 'Demo User',
     declarant_capacity: 'agent',
     declarant_organisation_name: 'Demo Company',
-    email: 'demo@mpractice.com',
+    email: 'demo@arcanus.com',
     phone: '+44 20 1234 5678',
     address: '100 Parliament Street',
     city: 'London',
@@ -314,12 +314,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   /**
-   * Enter Demo Mode (deprecated - use regular login with demo@mpractice.com)
+   * Enter Demo Mode (deprecated - use regular login with demo@arcanus.com)
    * Kept for backward compatibility
    */
   async function enterDemoMode() {
     // Just login as demo user
-    await login('demo@mpractice.com', 'demo1234');
+    await login('demo@arcanus.com', 'demo1234');
   }
 
   return (

@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 import cdsRoutes from './routes/cds.routes.js';
 import hmrcRoutes from './routes/hmrc.routes.js';
 import clientsRoutes from './routes/clients.routes.js';
@@ -16,7 +18,7 @@ import accountsProductionRoutes from './routes/accounts-production.routes.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 import { requireModuleAccess, tenantMiddleware } from './middleware/tenant.js';
 import { initAuthDatabase } from './config/auth-database.js';
-import { getDefaultDatabasePath, getUploadsRoot } from './config/storage-paths.js';
+import { getDefaultDatabasePath, getUploadsRoot, getProjectRoot } from './config/storage-paths.js';
 import { buildOpenApiSpec } from './docs/openapi.js';
 import { ensureRbacSeedData } from './services/rbac-service.js';
 import './config/database.js'; // Initialize database
@@ -43,7 +45,7 @@ function renderSwaggerHtml() {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>M Practice API Docs</title>
+    <title>Arcanus Practice API Docs</title>
     <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
     <style>
       body { margin: 0; background: #0b0f19; }
@@ -65,6 +67,11 @@ function renderSwaggerHtml() {
   </body>
 </html>`;
 }
+
+// When packaged in Electron the frontend is served from this same origin, so
+// the desktop build sends same-origin requests and does not need a CORS allow.
+const serveFrontend = process.env.SERVE_FRONTEND === 'true' || process.env.NODE_ENV === 'production';
+const frontendDir = path.join(getProjectRoot(), 'dist');
 
 // Middleware
 app.use(cors({
@@ -132,6 +139,15 @@ app.get('/clients/:clientId/onboarding', tenantMiddleware, requireModuleAccess('
   }); // TODO: Implement
 });
 
+// Serve the built frontend (Electron / production single-origin mode) with an
+// SPA fallback so client-side routes resolve to index.html.
+if (serveFrontend && fs.existsSync(frontendDir)) {
+  app.use(express.static(frontendDir));
+  app.get(/^\/(?!auth|cds|hmrc|clients|claims|analysis|settings|documents|reports|audit|accounts-sets|companies-house|onboarding|health|api-docs).*/, (req, res) => {
+    res.sendFile(path.join(frontendDir, 'index.html'));
+  });
+}
+
 // 404 handler
 app.use(notFoundHandler);
 
@@ -143,7 +159,7 @@ app.listen(PORT, () => {
   console.log('');
   console.log('╔════════════════════════════════════════════════════════════╗');
   console.log('║                                                            ║');
-  console.log('║          M Practice Manager - CDS Backend Service           ║');
+  console.log('║          Arcanus Practice - Local Backend Service          ║');
   console.log('║                                                            ║');
   console.log('╚════════════════════════════════════════════════════════════╝');
   console.log('');

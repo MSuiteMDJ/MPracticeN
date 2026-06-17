@@ -57,7 +57,7 @@ export default function Checklist() {
         tips={[
           'Keep MRNs, invoices, and bank proofs handy before uploading',
           'Use this checklist per claim to avoid HMRC rejections',
-          'Ask M Assist to fetch missing MRNs or invoices automatically',
+          'Ask Arcanus Assist to fetch missing MRNs or invoices automatically',
         ]}
         rightContent={
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
@@ -271,7 +271,7 @@ export default function Checklist() {
             Missing a document?
           </h3>
           <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-            M Assist can help you understand which documents are essential and how to obtain
+            Arcanus Assist can help you understand which documents are essential and how to obtain
             missing evidence.
           </p>
           <button
@@ -285,7 +285,7 @@ export default function Checklist() {
               cursor: 'pointer',
             }}
           >
-            Ask M Assist about Documents
+            Ask Arcanus Assist about Documents
           </button>
         </div>
       </div>

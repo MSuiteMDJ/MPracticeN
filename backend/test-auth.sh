@@ -6,7 +6,7 @@
 API_URL="http://localhost:3003"
 
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║     M Practice Manager - Multi-Tenant Auth Test            ║"
+echo "║     Arcanus Practice - Multi-Tenant Auth Test            ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""
 

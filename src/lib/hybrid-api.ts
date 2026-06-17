@@ -39,7 +39,10 @@ if (!isWebEnvironment()) {
   isDemoMode = () => localStorage.getItem('demo_mode') === 'true';
 }
 
-const HEROKU_API_URL = (import.meta as any).env?.VITE_API_URL || 'https://suite-customs-backend-0c17d12529d3.herokuapp.com';
+// Local-first: default to the bundled local backend. When the frontend is
+// served by that backend (Electron / production), an empty VITE_API_URL keeps
+// requests same-origin; in dev it falls back to the local backend port.
+const API_BASE_URL = (import.meta as any).env?.VITE_API_URL ?? 'http://localhost:3003';
 
 // Helper to get auth token
 function getAuthToken(): string | null {
@@ -57,7 +60,7 @@ async function herokuFetch(endpoint: string, options: RequestInit = {}) {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${HEROKU_API_URL}${endpoint}`, {
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: {
       ...headers,
@@ -186,7 +189,7 @@ export async function getDashboardStats() {
 // Hybrid API: Login
 export async function login(email: string, password: string) {
   // Check if demo login
-  if (email === 'demo@mpractice.com' && password === 'demo1234') {
+  if (email === 'demo@arcanus.com' && password === 'demo1234') {
     // Demo mode: Store demo user info
     localStorage.setItem('current_user_email', email);
     localStorage.setItem('demo_mode', 'true');
@@ -202,7 +205,7 @@ export async function login(email: string, password: string) {
       success: true,
       mode: 'demo',
       user: {
-        email: 'demo@mpractice.com',
+        email: 'demo@arcanus.com',
         first_name: 'Demo',
         last_name: 'User',
         company_name: settings.company_name || 'Demo Company',
@@ -213,7 +216,7 @@ export async function login(email: string, password: string) {
 
   // Production mode: Call Heroku API
   localStorage.removeItem('demo_mode');
-  const response = await fetch(`${HEROKU_API_URL}/auth/login`, {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -246,7 +249,7 @@ export async function register(data: {
 }) {
   localStorage.removeItem('demo_mode');
   
-  const response = await fetch(`${HEROKU_API_URL}/auth/register`, {
+  const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

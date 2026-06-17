@@ -18,8 +18,8 @@ export async function initAuthDatabase() {
     authPool = new Pool({
       host: process.env.AUTH_DB_HOST || 'localhost',
       port: parseInt(process.env.AUTH_DB_PORT || '5432'),
-      database: process.env.AUTH_DB_NAME || 'm_practice_auth',
-      user: process.env.AUTH_DB_USER || 'mpractice',
+      database: process.env.AUTH_DB_NAME || 'arcanus_practice_auth',
+      user: process.env.AUTH_DB_USER || 'arcanus',
       password: process.env.AUTH_DB_PASSWORD,
       max: 20,
       idleTimeoutMillis: 30000,

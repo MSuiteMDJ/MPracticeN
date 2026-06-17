@@ -275,7 +275,7 @@ export default function HMRCResources() {
             Need help understanding HMRC regulations?
           </h3>
           <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-            M Assist can explain complex HMRC regulations in plain English and help you understand
+            Arcanus Assist can explain complex HMRC regulations in plain English and help you understand
             how they apply to your specific claim.
           </p>
           <button
@@ -289,7 +289,7 @@ export default function HMRCResources() {
               cursor: 'pointer',
             }}
           >
-            Ask M Assist about Regulations
+            Ask Arcanus Assist about Regulations
           </button>
         </div>
       </div>

@@ -196,6 +196,6 @@ export async function getWebDemoSettings() {
   return {
     company_name: 'Demo Company',
     user_name: 'Demo User',
-    user_email: 'demo@mpractice.com'
+    user_email: 'demo@arcanus.com'
   };
 }

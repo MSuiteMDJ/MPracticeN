@@ -1,25 +1,26 @@
 {
-  "name": "m-practice-next",
+  "name": "arcanus-practice",
   "version": "0.1.0",
-  "description": "M Practice Manager (Next) - Rebuild based on proven Customs shell",
+  "description": "Arcanus Practice - local-first practice management desktop app",
   "type": "module",
+  "main": "electron/main.cjs",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 3002 --strictPort",
     "dev:backend": "PORT=3003 FRONTEND_URL=http://localhost:3002 pnpm --prefix backend run dev",
     "dev:all": "pnpm run dev:backend & pnpm run dev",
     "start": "pnpm run dev:all",
-    "control": "open control-panel.html",
     "build": "pnpm run build:frontend && pnpm run build:backend",
     "build:frontend": "vite build",
     "build:backend": "pnpm --prefix backend run build",
     "build:all": "pnpm run build",
     "preview": "vite preview",
+    "electron": "electron .",
+    "desktop": "pnpm run build:frontend && electron .",
+    "dist": "pnpm run build:frontend && electron-builder",
+    "dist:dir": "pnpm run build:frontend && electron-builder --dir",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write src",
-    "tauri": "source $HOME/.cargo/env && tauri",
-    "tauri:dev": "./tauri-dev.sh",
-    "tauri:build": "./tauri-build.sh"
+    "format": "prettier --write src"
   },
   "dependencies": {
     "@prisma/client": "^7.8.0",
@@ -42,6 +43,8 @@
     "@typescript-eslint/parser": "^6.17.0",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
+    "electron": "^31.7.7",
+    "electron-builder": "^25.1.8",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -58,5 +61,53 @@
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "pnpm@10.28.2",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "better-sqlite3",
+      "bcrypt",
+      "esbuild"
+    ]
+  },
+  "build": {
+    "appId": "com.arcanus.practice",
+    "productName": "Arcanus Practice",
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "public/arcanus-logo.png"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": [
+          "**/*",
+          "!**/.env",
+          "!uploads/**"
+        ]
+      }
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Office"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.business"
+    }
+  }
 }
